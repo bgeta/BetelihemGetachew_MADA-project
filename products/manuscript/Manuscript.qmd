@@ -1,5 +1,5 @@
 ---
-title: "Predictors of high nicotine dependence among adult smokers in Botswana"
+title: "Prevalence and Predictors of high nicotine dependence among adult smokers in Botswana"
 subtitle: ""
 author: Betelihem Getachew
 date: "`r Sys.Date()`"
@@ -44,13 +44,12 @@ library(knitr)
 *Provide enough background on your topic that others can understand the
 why and how of your analysis*
 
-In recent years, tobacco industry has shifted their tobacco market
-towards low and middle income countries. For countries like Botswana,
-and other African countries the prevalence of smoking is relatively low
-compared to other middle and high income countries.However, not much has
-been said about smokers nicotine dependence in the region. Understanding
-nicotine dependence among smokers provides an opportunity for a targeted
-intervention strategies that are more efficient.
+For countries like Botswana, and other African countries the prevalence
+of smoking is relatively low compared to other middle and high income
+countries. However, not much has been said about smokers nicotine
+dependence in the region. Understanding nicotine dependence among
+smokers provides an opportunity for a targeted intervention strategies
+that are more efficient and effective.
 
 \## Description of data and data source *Describe what the data is, what
 it contains, where it is from, etc. Eventually this might be part of a
@@ -65,17 +64,18 @@ intended to generate comparable data within and across countries. GATS
 enhances countries' capacity to design, implement and evaluate tobacco
 control interventions ([GATS Botswana Survey
 2017](https://nccd.cdc.gov/GTSSDataSurveyResources/Ancillary/DataReports.aspx?CAID=2&Survey=4&WHORegion=3&Country=123&Site=27000)).
-Using GATS protocol, a nationally representative sample of 4643
-participants was collected for Botswana in 2017 using a stratified
+Using GATS protocol, a nationally representative sample of 4,643
+participants was collected in Botswana in 2017 using a stratified
 cluster sample design. Data was collected on socio-demographic, tobacco
 smoking, smokeless tobacco, cessation both smoking and smokeless,
-economics, media and knowledge, attitude and perceptions of tobacco. The
-outcome variable for nicotine dependence, also known as the Heavy
-Smoking Index, will be calculated as a score using two question items
-from the tobacco smoking section on the survey questionnaire ([Heaviness
-of Smoking Index \| Data Share 2.0
+economics, media and knowledge, attitude and perceptions of tobacco.
+While the outcome measure of interest "Nicotine dependence" is not
+directly collected, the measure for nicotine dependence, also known as
+the Heavy Smoking Index (HSI), will be calculated as a score using two
+question items from the tobacco smoking section on the survey
+questionnaire ([Heaviness of Smoking Index \| Data Share 2.0
 (nih.gov)](https://datashare.nida.nih.gov/instrument/heaviness-of-smoking-index).
-Based on the scores, smokers will be catagoized into low addiction
+Based on the HSI scores, smokers will be categorized into low addiction
 (score 0-2), medium addiction (score 3-4), high addiction (5-6).
 
 \## Questions/Hypotheses to be addressed *State the research questions
@@ -84,9 +84,9 @@ you plan to answer with this analysis.*
 The aim of this paper is therefor to;
 
 1.  Describe the prevalence of nicotine dependence in Botswana using the
-    Heavy Smoking Index(HSI) by socio-demographics
+    Heavy Smoking Index(HSI) by Socio-demographics and other factors
 
-2.  Explore and Identity predictors of nicotine dependence in Botswana.
+2.  Explore and Identify predictors of nicotine dependence in Botswana.
 
 To cite other work (important everywhere, but likely happens first in
 introduction), make sure your references are in the bibtex file
