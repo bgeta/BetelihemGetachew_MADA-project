@@ -1,7 +1,7 @@
 ---
-title: "Example Manuscript Template for a Data Analysis Project"
+title: "Predictors of high nicotine dependence among adult smokers in Botswana"
 subtitle: ""
-author: Andreas Handel
+author: Betelihem Getachew
 date: "`r Sys.Date()`"
 format:
   docx:
@@ -10,13 +10,20 @@ format:
     highlight-style: github
 bibliography: ../dataanalysis_template_references.bib
 csl: ../apa.csl
+editor: 
+  markdown: 
+    wrap: 72
 ---
 
-The structure below is one possible setup for a data analysis project (including the course project). For a manuscript, adjust as needed. 
-You don't need to have exactly these sections, but the content covering those sections should be addressed.
+The structure below is one possible setup for a data analysis project
+(including the course project). For a manuscript, adjust as needed. You
+don't need to have exactly these sections, but the content covering
+those sections should be addressed.
 
-This uses MS Word as output format. [See here](https://quarto.org/docs/output-formats/ms-word.html) for more information. You can switch to other formats, like html or pdf. See [the Quarto documentation](https://quarto.org/) for other formats.
-
+This uses MS Word as output format. [See
+here](https://quarto.org/docs/output-formats/ms-word.html) for more
+information. You can switch to other formats, like html or pdf. See [the
+Quarto documentation](https://quarto.org/) for other formats.
 
 ```{r, echo=FALSE, message=FALSE}
 # load a few R packages
@@ -24,63 +31,119 @@ library(here)
 library(knitr)
 ```
 
-
-
 # Summary/Abstract
-_Write a summary of your project._
 
+*Write a summary of your project.*
 
 {{< pagebreak >}}
 
-
-# Introduction 
+# Introduction
 
 ## General Background Information
-_Provide enough background on your topic that others can understand the why and how of your analysis_ 
 
-## Description of data and data source
-_Describe what the data is, what it contains, where it is from, etc. Eventually this might be part of a methods section._
+*Provide enough background on your topic that others can understand the
+why and how of your analysis*
 
-## Questions/Hypotheses to be addressed
-_State the research questions you plan to answer with this analysis._
+In recent years, tobacco industry has shifted their tobacco market
+towards low and middle income countries. For countries like Botswana,
+and other African countries the prevalence of smoking is relatively low
+compared to other middle and high income countries.However, not much has
+been said about smokers nicotine dependence in the region. Understanding
+nicotine dependence among smokers provides an opportunity for a targeted
+intervention strategies that are more efficient.
 
-To cite other work (important everywhere, but likely happens first in introduction), make sure your references are in the bibtex file specified in the YAML header above (here `dataanalysis_template_references.bib`) and have the right bibtex key. Then you can include like this:
+\## Description of data and data source *Describe what the data is, what
+it contains, where it is from, etc. Eventually this might be part of a
+methods section.*
 
-Examples of reproducible research projects can for instance be found in [@mckay2020; @mckay2020a]
+Under the Global Tobacco Surveillance system Data (GTSSData) at CDC, the
+Global Adult Tobacco Survey (GATS) is the global standard to
+systematically monitor adult tobacco use and track key tobacco control
+indicators. The survey is a nationally representative household survey
+of adults 15 years of age or older, using a standard protocol. It is
+intended to generate comparable data within and across countries. GATS
+enhances countries' capacity to design, implement and evaluate tobacco
+control interventions ([GATS Botswana Survey
+2017](https://nccd.cdc.gov/GTSSDataSurveyResources/Ancillary/DataReports.aspx?CAID=2&Survey=4&WHORegion=3&Country=123&Site=27000)).
+Using GATS protocol, a nationally representative sample of 4643
+participants was collected for Botswana in 2017 using a stratified
+cluster sample design. Data was collected on socio-demographic, tobacco
+smoking, smokeless tobacco, cessation both smoking and smokeless,
+economics, media and knowledge, attitude and perceptions of tobacco. The
+outcome variable for nicotine dependence, also known as the Heavy
+Smoking Index, will be calculated as a score using two question items
+from the tobacco smoking section on the survey questionnaire ([Heaviness
+of Smoking Index \| Data Share 2.0
+(nih.gov)](https://datashare.nida.nih.gov/instrument/heaviness-of-smoking-index).
+Based on the scores, smokers will be catagoized into low addiction
+(score 0-2), medium addiction (score 3-4), high addiction (5-6).
+
+\## Questions/Hypotheses to be addressed *State the research questions
+you plan to answer with this analysis.*
+
+The aim of this paper is therefor to;
+
+1.  Describe the prevalence of nicotine dependence in Botswana using the
+    Heavy Smoking Index(HSI) by socio-demographics
+
+2.  Explore and Identity predictors of nicotine dependence in Botswana.
+
+To cite other work (important everywhere, but likely happens first in
+introduction), make sure your references are in the bibtex file
+specified in the YAML header above (here
+`dataanalysis_template_references.bib`) and have the right bibtex key.
+Then you can include like this:
+
+Examples of reproducible research projects can for instance be found in
+[@mckay2020; @mckay2020a]
 
 {{< pagebreak >}}
 
+# Methods
 
-# Methods 
-
-_Describe your methods. That should describe the data, the cleaning processes, and the analysis approaches. You might want to provide a shorter description here and all the details in the supplement._
-
+*Describe your methods. That should describe the data, the cleaning
+processes, and the analysis approaches. You might want to provide a
+shorter description here and all the details in the supplement.*
 
 ## Data aquisition
-_As applicable, explain where and how you got the data. If you directly import the data from an online source, you can combine this section with the next._
 
+*As applicable, explain where and how you got the data. If you directly
+import the data from an online source, you can combine this section with
+the next.*
 
 ## Data import and cleaning
-_Write code that reads in the file and cleans it so it's ready for analysis. Since this will be fairly long code for most datasets, it might be a good idea to have it in one or several R scripts. If that is the case, explain here briefly what kind of cleaning/processing you do, and provide more details and well documented code somewhere (e.g. as supplement in a paper). All materials, including files that contain code, should be commented well so everyone can follow along._
 
+*Write code that reads in the file and cleans it so it's ready for
+analysis. Since this will be fairly long code for most datasets, it
+might be a good idea to have it in one or several R scripts. If that is
+the case, explain here briefly what kind of cleaning/processing you do,
+and provide more details and well documented code somewhere (e.g. as
+supplement in a paper). All materials, including files that contain
+code, should be commented well so everyone can follow along.*
 
 ## Statistical analysis
-_Explain anything related to your statistical analyses._
 
+*Explain anything related to your statistical analyses.*
 
 {{< pagebreak >}}
-
 
 # Results
 
 ## Exploratory/Descriptive analysis
 
-_Use a combination of text/tables/figures to explore and describe your data. Show the most important descriptive results here. Additional ones should go in the supplement. Even more can be in the R and Quarto files that are part of your project._
-
+*Use a combination of text/tables/figures to explore and describe your
+data. Show the most important descriptive results here. Additional ones
+should go in the supplement. Even more can be in the R and Quarto files
+that are part of your project.*
 
 @tbl-summarytable shows a summary of the data.
 
-Note the loading of the data providing a **relative** path using the `../../` notation. (Two dots means a folder up). You never want to specify an **absolute** path like `C:\ahandel\myproject\results\` because if you share this with someone, it won't work for them since they don't have that path. You can also use the `here` R package to create paths. See examples of that below.
+Note the loading of the data providing a **relative** path using the
+`../../` notation. (Two dots means a folder up). You never want to
+specify an **absolute** path like `C:\ahandel\myproject\results\`
+because if you share this with someone, it won't work for them since
+they don't have that path. You can also use the `here` R package to
+create paths. See examples of that below.
 
 ```{r}
 #| label: tbl-summarytable
@@ -90,12 +153,14 @@ resulttable=readRDS("../../results/summarytable.rds")
 knitr::kable(resulttable)
 ```
 
-
-
 ## Basic statistical analysis
 
-_To get some further insight into your data, if reasonable you could compute simple statistics (e.g. simple models with 1 predictor) to look for associations between your outcome(s) and each individual predictor variable. Though note that unless you pre-specified the outcome and main exposure, any "p<0.05 means statistical significance" interpretation is not valid._
-
+*To get some further insight into your data, if reasonable you could
+compute simple statistics (e.g. simple models with 1 predictor) to look
+for associations between your outcome(s) and each individual predictor
+variable. Though note that unless you pre-specified the outcome and main
+exposure, any "p\<0.05 means statistical significance" interpretation is
+not valid.*
 
 @fig-result shows a scatterplot figure produced by one of the R scripts.
 
@@ -106,10 +171,14 @@ _To get some further insight into your data, if reasonable you could compute sim
 knitr::include_graphics(here("results","height_weight_stratified.png"))
 ```
 
-
 ## Full analysis
 
-_Use one or several suitable statistical/machine learning methods to analyze your data and to produce meaningful figures, tables, etc. This might again be code that is best placed in one or several separate R scripts that need to be well documented. You want the code to produce figures and data ready for display as tables, and save those. Then you load them here._
+*Use one or several suitable statistical/machine learning methods to
+analyze your data and to produce meaningful figures, tables, etc. This
+might again be code that is best placed in one or several separate R
+scripts that need to be well documented. You want the code to produce
+figures and data ready for display as tables, and save those. Then you
+load them here.*
 
 Example @tbl-resulttable2 shows a summary of a linear model fit.
 
@@ -121,33 +190,40 @@ resulttable2 = readRDS(here("results","resulttable2.rds"))
 knitr::kable(resulttable2)
 ```
 
-
 {{< pagebreak >}}
-
 
 # Discussion
 
 ## Summary and Interpretation
-_Summarize what you did, what you found and what it means._
+
+*Summarize what you did, what you found and what it means.*
 
 ## Strengths and Limitations
-_Discuss what you perceive as strengths and limitations of your analysis._
+
+*Discuss what you perceive as strengths and limitations of your
+analysis.*
 
 ## Conclusions
-_What are the main take-home messages?_
 
-_Include citations in your Rmd file using bibtex, the list of references will automatically be placed at the end_
+*What are the main take-home messages?*
 
-This paper [@leek2015] discusses types of analyses. 
+*Include citations in your Rmd file using bibtex, the list of references
+will automatically be placed at the end*
 
-These papers [@mckay2020; @mckay2020a] are good examples of papers published using a fully reproducible setup similar to the one shown in this template. 
+This paper [@leek2015] discusses types of analyses.
 
-Note that this cited reference will show up at the end of the document, the reference formatting is determined by the CSL file specified in the YAML header. Many more style files for almost any journal [are available](https://www.zotero.org/styles). You also specify the location of your bibtex reference file in the YAML. You can call your reference file anything you like, I just used the generic word `references.bib` but giving it a more descriptive name is probably better.
+These papers [@mckay2020; @mckay2020a] are good examples of papers
+published using a fully reproducible setup similar to the one shown in
+this template.
 
+Note that this cited reference will show up at the end of the document,
+the reference formatting is determined by the CSL file specified in the
+YAML header. Many more style files for almost any journal [are
+available](https://www.zotero.org/styles). You also specify the location
+of your bibtex reference file in the YAML. You can call your reference
+file anything you like, I just used the generic word `references.bib`
+but giving it a more descriptive name is probably better.
 
 {{< pagebreak >}}
 
 # References
-
-
-
