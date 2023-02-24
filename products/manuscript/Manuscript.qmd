@@ -24,6 +24,7 @@ library(dplyr) #for data processing/cleaning
 library(tidyr) #for data processing/cleaning
 library(skimr) #for nice visualization of data
 library(haven)
+library(png)
 ```
 
 # Introduction
@@ -143,43 +144,46 @@ different level the highest proportion being under high addiction. In
 all three categories of HSI, participants of rural residence were larger
 in proportion than urban residents. All codes related to data
 exploration are saved under code/analysis_code with a file name of
-exploratorycodeR.R
-
-All tables and figures listed below are saved under results folder
+exploratorycodeR.R. All tables and figures listed below are saved under
+results folder
 
 @table1 shows a summary of the data.
 
 @figure1 shows boxplots
 
-@figure2 shows histogram
+@figure2 shows histogram 
 
+
+#I unfortunately was not able to pull in the tables and figures saved in the results folder. The below are the codes i used. I have turned them into texts to allow for the document to render without errors
+#```{r}
+#| label: Summary Tables of variables of Interest
+#| tbl-cap: "Data summary table."
+#| echo: FALSE
+#table1=readRDS("../../results/table1.rds")
+#knitr::kable(table1)
+#```
+
+
+#```{r}
+#| label: BHistogram by AGE participant became daily smoker and HSI
+#| tbl-cap: "Boxplot."
+#| echo: FALSE
+#knitr::include_graphics(here("results","Histogram_HSI_and_AGE_daily_smoking".png))
+#```
+
+#```{r}
+#| label: Histogram by AGE participant became daily smoker and HSI
+#| tbl-cap: "Data summary table."
+#| echo: FALSE
+#figure2=readPNG("../../results/figure2.png")
+#knitr::kable(figure2)
+#```
 ## Basic statistical analysis
 
-```{r}
-#| label: fig-result
-#| fig-cap: "Height and weight stratified by gender."
-#| echo: FALSE
-knitr::include_graphics(here("results","height_weight_stratified.png"))
-```
 
 ## Full analysis
 
-*Use one or several suitable statistical/machine learning methods to
-analyze your data and to produce meaningful figures, tables, etc. This
-might again be code that is best placed in one or several separate R
-scripts that need to be well documented. You want the code to produce
-figures and data ready for display as tables, and save those. Then you
-load them here.*
 
-Example @tbl-resulttable2 shows a summary of a linear model fit.
-
-```{r}
-#| label: tbl-resulttable2
-#| tbl-cap: "Linear model fit table."
-#| echo: FALSE
-resulttable2 = readRDS(here("results","resulttable2.rds"))
-knitr::kable(resulttable2)
-```
 
 {{< pagebreak >}}
 
