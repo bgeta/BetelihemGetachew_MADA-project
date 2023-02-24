@@ -1,5 +1,5 @@
 ---
-title: "Prevalence and Predictors of high nicotine dependence among adult smokers in Botswana"
+title: "Prevalence and predictors of high nicotine dependence among adult smokers in Botswana,2017"
 subtitle: ""
 author: Betelihem Getachew
 date: "`r Sys.Date()`"
@@ -15,45 +15,28 @@ editor:
     wrap: 72
 ---
 
-The structure below is one possible setup for a data analysis project
-(including the course project). For a manuscript, adjust as needed. You
-don't need to have exactly these sections, but the content covering
-those sections should be addressed.
-
-This uses MS Word as output format. [See
-here](https://quarto.org/docs/output-formats/ms-word.html) for more
-information. You can switch to other formats, like html or pdf. See [the
-Quarto documentation](https://quarto.org/) for other formats.
-
 ```{r, echo=FALSE, message=FALSE}
 # load a few R packages
 library(here)
 library(knitr)
+library(readxl) #for loading Excel files
+library(dplyr) #for data processing/cleaning
+library(tidyr) #for data processing/cleaning
+library(skimr) #for nice visualization of data
+library(haven)
 ```
-
-# Summary/Abstract
-
-*Write a summary of your project.*
-
-{{< pagebreak >}}
 
 # Introduction
 
 ## General Background Information
 
-*Provide enough background on your topic that others can understand the
-why and how of your analysis*
-
 For countries like Botswana, and other African countries the prevalence
 of smoking is relatively low compared to other middle and high income
-countries. However, not much has been said about smokers nicotine
-dependence in the region. Understanding nicotine dependence among
-smokers provides an opportunity for a targeted intervention strategies
-that are more efficient and effective.
-
-\## Description of data and data source *Describe what the data is, what
-it contains, where it is from, etc. Eventually this might be part of a
-methods section.*
+countries. However, while the smoking prevalence might be low, not much
+has been said about smokers nicotine dependence in the region.
+Understanding nicotine dependence among smokers provides an opportunity
+for a targeted intervention strategies that are more efficient and
+effective.
 
 Under the Global Tobacco Surveillance system Data (GTSSData) at CDC, the
 Global Adult Tobacco Survey (GATS) is the global standard to
@@ -66,20 +49,7 @@ control interventions ([GATS Botswana Survey
 2017](https://nccd.cdc.gov/GTSSDataSurveyResources/Ancillary/DataReports.aspx?CAID=2&Survey=4&WHORegion=3&Country=123&Site=27000)).
 Using GATS protocol, a nationally representative sample of 4,643
 participants was collected in Botswana in 2017 using a stratified
-cluster sample design. Data was collected on socio-demographic, tobacco
-smoking, smokeless tobacco, cessation both smoking and smokeless,
-economics, media and knowledge, attitude and perceptions of tobacco.
-While the outcome measure of interest "Nicotine dependence" is not
-directly collected, the measure for nicotine dependence, also known as
-the Heavy Smoking Index (HSI), will be calculated as a score using two
-question items from the tobacco smoking section on the survey
-questionnaire ([Heaviness of Smoking Index \| Data Share 2.0
-(nih.gov)](https://datashare.nida.nih.gov/instrument/heaviness-of-smoking-index).
-Based on the HSI scores, smokers will be categorized into low addiction
-(score 0-2), medium addiction (score 3-4), high addiction (5-6).
-
-\## Questions/Hypotheses to be addressed *State the research questions
-you plan to answer with this analysis.*
+cluster sample design.
 
 The aim of this paper is therefor to;
 
@@ -105,21 +75,56 @@ Examples of reproducible research projects can for instance be found in
 processes, and the analysis approaches. You might want to provide a
 shorter description here and all the details in the supplement.*
 
-## Data aquisition
+This study will conduct a secondary data analysis using the Global Adult
+Tobacco Survey (GATS) Botswana as described above. The survey data
+collection was completed in 2017. The sample design is a multi-stage,
+geographically clustered probability sample design to produce nationally
+representative data. First, households are randomly selected, then one
+individual is randomly chosen from each selected household to
+participate in the survey. The random selection of households and
+participants allows for an unbiased, randomly selected, and nationally
+representative sample of the larger population. The cluster sampling
+allows representation in gender and urbanicity. More details on the
+Global Adult Tobacco Survey implementation process can be found
+elsewhere ([GATS Implementation
+Protocol](https://nccd.cdc.gov/GTSSDataSurveyResources/Ancillary/Documentation.aspx?SUID=4&DOCT=4)).
 
-*As applicable, explain where and how you got the data. If you directly
-import the data from an online source, you can combine this section with
-the next.*
+A total of 608 variables covering topics of socio-demographic, tobacco
+smoking, smokeless tobacco, cessation both smoking and smokeless,
+economics, media and knowledge, attitude and perceptions of tobacco were
+collected in this survey. While the outcome measure of interest
+"Nicotine dependence" is not directly collected, the measure for
+nicotine dependence, also known as the Heavy Smoking Index (HSI), will
+be calculated as a score using two question items from the tobacco
+smoking section on the survey questionnaire ([Heaviness of Smoking Index
+\| Data Share 2.0
+(nih.gov)](https://datashare.nida.nih.gov/instrument/heaviness-of-smoking-index).
+Based on the HSI scores, smokers will be categorized into low addiction
+(score 0-2), medium addiction (score 3-4), high addiction (5-6).
 
 ## Data import and cleaning
 
-*Write code that reads in the file and cleans it so it's ready for
-analysis. Since this will be fairly long code for most datasets, it
-might be a good idea to have it in one or several R scripts. If that is
-the case, explain here briefly what kind of cleaning/processing you do,
-and provide more details and well documented code somewhere (e.g. as
-supplement in a paper). All materials, including files that contain
-code, should be commented well so everyone can follow along.*
+An SPSS data file was [downloaded from GTSS Info
+website](https://nccd.cdc.gov/GTSSDataSurveyResources/Ancillary/DataReports.aspx?CAID=2&Survey=4&WHORegion=3&Country=123&Site=27000)
+and imported into R. The code for importing and cleaning the dataset is
+documented in the R script file titled "processingcode.R". The raw
+dataset contained 4643 observations and 608 variables, of which 591
+variables were filtered out. Only 17 variables were considered for
+further examination.The variables of interest included
+socio-demographics, smoking status, smoking behaviors, cessation and
+media exposure. The 18th variable was computed by summing two variables
+(B01 + B07) to create the Heavy Smoking Index (HSI) Score, a proxy for
+examining nicotine dependence. The number of observations was further
+reduced by including only daily and less than daily smokers leaving a
+total of 631 observations. The dataset was examined for outliers,
+distribution, class appropriation. Recatagorization of response options
+was conducted when appropriate. After the removal of missing and outlier
+values, a total of 416 observations and 18 variables were saved for data
+exploration.
+
+![](images/paste-89A08E08.png){width="343"}
+
+---- exploredata --------
 
 ## Statistical analysis
 
@@ -131,38 +136,24 @@ code, should be commented well so everyone can follow along.*
 
 ## Exploratory/Descriptive analysis
 
-*Use a combination of text/tables/figures to explore and describe your
-data. Show the most important descriptive results here. Additional ones
-should go in the supplement. Even more can be in the R and Quarto files
-that are part of your project.*
+In this sample of smokers, a higher proportion of smokers who completed
+secondary education were categorized in all three addiction levels.
+Married individuals with Higher Wealth level were also categorized in
+different level the highest proportion being under high addiction. In
+all three categories of HSI, participants of rural residence were larger
+in proportion than urban residents. All codes related to data
+exploration are saved under code/analysis_code with a file name of
+exploratorycodeR.R
 
-@tbl-summarytable shows a summary of the data.
+All tables and figures listed below are saved under results folder
 
-Note the loading of the data providing a **relative** path using the
-`../../` notation. (Two dots means a folder up). You never want to
-specify an **absolute** path like `C:\ahandel\myproject\results\`
-because if you share this with someone, it won't work for them since
-they don't have that path. You can also use the `here` R package to
-create paths. See examples of that below.
+@table1 shows a summary of the data.
 
-```{r}
-#| label: tbl-summarytable
-#| tbl-cap: "Data summary table."
-#| echo: FALSE
-resulttable=readRDS("../../results/summarytable.rds")
-knitr::kable(resulttable)
-```
+@figure1 shows boxplots
+
+@figure2 shows histogram
 
 ## Basic statistical analysis
-
-*To get some further insight into your data, if reasonable you could
-compute simple statistics (e.g. simple models with 1 predictor) to look
-for associations between your outcome(s) and each individual predictor
-variable. Though note that unless you pre-specified the outcome and main
-exposure, any "p\<0.05 means statistical significance" interpretation is
-not valid.*
-
-@fig-result shows a scatterplot figure produced by one of the R scripts.
 
 ```{r}
 #| label: fig-result
