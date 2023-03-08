@@ -7,7 +7,7 @@
 # Note the ## ---- name ---- notation
 # This is done so one can pull in the chunks of code into the Quarto document
 # see here: https://bookdown.org/yihui/rmarkdown-cookbook/read-chunk.html
-
+#REVISED after submission on 3.7.23
 
 ## ---- packages --------
 #load needed packages. make sure they are installed.
@@ -17,15 +17,20 @@ library(dplyr) #for data processing/cleaning
 library(tidyr) #for data processing/cleaning
 library(skimr) #for nice visualization of data 
 library(here)  #to set paths 
+library(haven)  #to read SAV file 
 library(gmodels)#to look at the tables 
 library(ggplot2) #to plot histograms and charts
-
+library(car) #to recode to 0 and 1
+library(foreign)
+library(MASS)
+library(Hmisc)
+library(reshape2)
 ## ---- loaddata --------
 #path to data
-
+getwd()
+setwd('C:/Data/GitHub/MADA23/BetelihemGetachew_MADA-project')
 data_location <- here::here("data","raw_data","Botswana.sav")
 rawdata<- read_sav(data_location)
-
 
 ## ---- exploredata --------
 #take a look at the data by conducting the below glimpse, summary and head functions
@@ -55,11 +60,12 @@ head(rawdata)
 
 #reducing the variables from 608 to 17 variables by sub-setting for variables of interest AS indicated above and assinging the appropriate class  
 
-rawdata1<- rawdata[,c("A01", "A11","RESIDENCE", "AGE","A04", "A05", "Wealth", "B01","B04","B07","B06A", "D08","G201C1", "G201D1", "G201B2", "G201E1", "G202")]
+rawdata1<- rawdata[,c("A01", "A11","RESIDENCE", "AGE","A04", "A05", "Wealth", "B01","B04","B07","B06A", "D08","D01")]
 
 ## ---- cleandata2 --------
 #creating a subset for smokers only based on B01 Do you currently smoke response?
 #only interested in responses 1,2 only (for daily and less than daily smokers)
+View(rawdata1)
 
 rawdata2=subset(rawdata1, B01 !=3)
 #check if the subset worked properly 
@@ -71,6 +77,7 @@ dim(rawdata2)
 ## ---- cleandata3 --------
 #now add the computed variable of interest HSI Heavy smoking Index by adding B01 and B07,
 rawdata2$HSI<-rawdata2$B01 + rawdata2$B07
+View(rawdata2)
 
 #check if appropriatly added 
 View(rawdata2)
@@ -81,7 +88,11 @@ dim(rawdata2)
 #checking for outliers and other odd observations 
 hist(rawdata2$HSI)
 # there is an outlier value of 10 that needs to be removed 
-df_rawdata3<-subset(rawdata2, HSI!=10)
+df_rawdata3 <- rawdata2 %>% 
+  filter(!HSI %in% c(10))
+
+View(df_rawdata2)
+
 #check if outlier removed 
 View(df_rawdata3)
 hist(df_rawdata3$HSI)
@@ -90,15 +101,21 @@ hist(df_rawdata3$HSI)
 ggplot(df_rawdata3)+
   aes(x=AGE)+ geom_histogram(bins=30L,fill="#0c4c8a")+
   theme_minimal()
+#check age of smoking initiation distribution 
+ggplot(df_rawdata3)+
+  aes(x=B04)+ geom_histogram(bins=30L,fill="#0c4c8a")+
+  theme_minimal()
 #There are a few respondents aged greater than 90 which is a possibility, so not removing these values
 #Look at each variable individually by using the summary function to detect any odd values
-summary(df_rawdata3$A04)
+summary(df_rawdata3$AGE)
+summary(df_rawdata3$B04)
 #it looks like there is a value of 99 for refused  that need to be removed 
 df_rawdata4<-subset(df_rawdata3, A04!=99)
+df_rawdata4<-subset(df_rawdata3, B04!=99)
+df_rawdata4<-subset(df_rawdata3, AGE!=99)
 #check if removed
-summary(df_rawdata4$A04)
-
-summary(df_rawdata4$A05)
+summary(df_rawdata4$AGE)
+summary(df_rawdata4$B04)
 #it looks like there is a value of 99 and 77 for refused and dont know that need to be removed
 df_rawdata5<-subset(df_rawdata4, A05!=99)
 #check if removed
@@ -106,11 +123,8 @@ summary(df_rawdata5$A05)
 df_rawdata6<-subset(df_rawdata5, A05!=77)
 #check if removed
 summary(df_rawdata6$A05)
-
 summary(df_rawdata6$Wealth)
 summary(df_rawdata6$A11)
-
-#Challange I wasnt able to resolve when changing from rawdata2 to df_rawdata3
 
 #check age when first started smoking daily
 ggplot(df_rawdata6)+
@@ -122,8 +136,8 @@ df_rawdata7<-subset(df_rawdata6, B04!=99)
 ggplot(df_rawdata7)+
   aes(x=B04)+ geom_histogram(bins=30L,fill="#0c4c8a")+
   theme_minimal()
-summary(df_rawdata7$B07)
-#Summary(df_rawdata7$D08)
+Summary(df_rawdata7$D01)
+Summary(df_rawdata7$D08)
 
 View(df_rawdata7)
 dim(df_rawdata7)
@@ -160,21 +174,30 @@ df_rawdata7$B04 <- as.numeric(df_rawdata7$B04)
 df_rawdata7$B07 <- as.factor(df_rawdata7$B07)
 df_rawdata7$B06A <- as.numeric(df_rawdata7$B06A)
 df_rawdata7$B07 <- as.factor(df_rawdata7$B07)
-df_rawdata7$D08 <- as.factor(df_rawdata7$D08)
+df_rawdata7$D01 <- as.factor(df_rawdata7$D01)
+df_rawdata7$D08 <- as.numeric(df_rawdata7$D08)
 df_rawdata7$Wealth <- as.factor(df_rawdata7$Wealth)
 df_rawdata7$HSI <- as.numeric(df_rawdata7$HSI)
 
+
 ## ---- cleandata5 --------
 
-#catagorize HSI scores by 0 for scores 0-2, 1 for scores 3 to 4,2 for scores 5-6scores in low addiction(score 0-2), medium addiction (score 3-4), high addiction (5-6).
-df_rawdata7$HSI[df_rawdata7$HSI==0 | df_rawdata7$HSI==1 |df_rawdata7$HSI==2] <- 0
+#catagorize HSI scores by 0 for scores 0-2, 1 for scores 3 to 4,2 for scores 5-6scores in low addiction(score 0,1,2,3), high addiction (4,5,6-6).
+df_rawdata7$HSI[df_rawdata7$HSI==0 | df_rawdata7$HSI==1 | df_rawdata7$HSI==2] <- 0
 df_rawdata7$HSI[df_rawdata7$HSI==3 | df_rawdata7$HSI==4] <- 1
 df_rawdata7$HSI[df_rawdata7$HSI==5 | df_rawdata7$HSI==6] <- 2
+
+df_rawdata7$D08[df_rawdata7$D08==1 | df_rawdata7$D08==2] <- 1
+df_rawdata7$D08[df_rawdata7$D08==3 | df_rawdata7$D08==4] <- 0
+
+
+
 #check your changes here 
 View(df_rawdata7)
 #labeling the values 
 
-df_rawdata7 <- df_rawdata7 %>%
+df_rawdata8 <- df_rawdata7 %>%
+  
   mutate(A01 = case_when(
     A01 == "1" ~ "Male",
     A01 == "2" ~ "Female")) %>%
@@ -184,7 +207,7 @@ mutate(AGE= case_when(
   AGE >= 25 & AGE < 45 ~ "25 to 44",
   AGE >= 45 & AGE < 65 ~ "45 to 64",
   AGE >= 65 ~ "65+")) %>%
-  
+
 mutate(A04 = case_when(
   A04 == "1" ~ "No Formal Education",
   A04 == "2" ~ "Primary Education",
@@ -227,7 +250,7 @@ mutate(A04 = case_when(
   mutate(B01 = case_when(
     B01 == "1" ~ "Daily",
     B01 == "2" ~ "Less than Daily",
-    B01 == "1" ~ "Not at all")) %>%
+    B01 == "3" ~ "Not at all")) %>%
   
   mutate(B07 = case_when(
     B07 == "1" ~ "Within 5 Minutes",
@@ -236,26 +259,54 @@ mutate(A04 = case_when(
     B07 == "4" ~ "More than 60 Minutes")) %>%
   
   mutate(D08 = case_when(
-    D08 == "1" ~ "Quit within the next Month",
-    D08 == "2" ~ "Thinking within the next 12 Months",
-    D08 == "3" ~ "Quit someday, but not next 12 Months",
-    D08 == "4" ~ "Not interested in quitting")) %>%
+    D08 == "0" ~ "No",
+    D08 == "1" ~ "Yes")) %>%
+  
+  mutate(D01 = case_when(
+    D01=="2"~"No",
+    D01=="1"~"Yes"
+  ))  %>%
   
   mutate(HSI = case_when(
     HSI == "0" ~ "Low Addiction",
-    HSI == "1" ~ "Medium Addiction",
-    HSI == "2" ~ "High Addiction",
+    HSI == "1" ~ "Medium  Addiction",
+    HSI == "2" ~ "High Addiction"
 )) 
 
-summary(df_rawdata7$HSI)
-sapply(df_rawdata7, class)
+#added labels for clarity of variables but it didnt work 
+df_rawdata8 %>% dplyr::rename(
+  Gender = A01,
+  Marital_Status=A11,
+  Educational_level=A04,
+  Employment_Status=A05,
+  Current_Smoking_Status=B01,
+  Age_smoking_Initiation=B04,
+  Smoke_after_waking_up=B07,
+  Cigaratte_smoked_daily=B06A,
+  Quit_Intention=D08,
+  Quit_attempt=D01
+)
+#check if labels are now changed 
+head(df_rawdata8)
+str(df_rawdata8)
+
+xtabs (~HSI+A01,data=df_rawdata8)#given the small number of females in this sample should we remove females from the model?
+xtabs (~HSI+A11,data=df_rawdata8)# table for HSI and Marital status
+xtabs (~HSI+A04,data=df_rawdata8)#table for HSI and Educational level
+xtabs (~HSI+A05,data=df_rawdata8)#table for HSI and Emoloyment status
+xtabs (~HSI+B01,data=df_rawdata8)
+xtabs (~HSI+B07,data=df_rawdata8)#table for HSI and smoke after waking up
+xtabs (~HSI+D01,data=df_rawdata8)#table for HSI and quit attempt
+xtabs (~HSI+D08,data=df_rawdata8)#table for HSI and quit intention
 
 
-sapply(df_rawdata7, class)
+View(df_rawdata8)
+## ---- cleandata5 --------
 
 
 ## ---- savedata --------
-processeddata <- df_rawdata7
+processeddata <- df_rawdata8
+
 # location to save file
 save_data_location <- here::here("data","processed_data","processeddata.rds")
 saveRDS(processeddata, file = save_data_location) 

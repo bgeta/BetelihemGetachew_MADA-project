@@ -28,17 +28,18 @@ library(vtree)  # to create crosstabs
 
 #Path to data. Note the use of the here() package and not absolute paths
 data_location <- here::here("data","processed_data","processeddata.rds")
-
+processeddata<-readRDS(data_location)
 
 ## ---- exploredata --------
 
 ## ---- Data Exploration Through Tables --------
+
 ## Understanding the Gender and Age(A01) breakdown within each group of HSI 
 table1<-tabyl(processeddata, A01,AGE,HSI)%>%
   adorn_percentages("col")%>%
   adorn_pct_formatting(digits=1)
 ## Understanding the Education and Employement breakdown within ech group of HSI
-tabyl(processeddata, A04,A05,HSI)%>%
+tabyl(processeddata, A04,A05, HSI)%>%
   adorn_percentages("col")%>%
   adorn_pct_formatting(digits=1)
 ## Understanding the Wealth and Education breakdown within ech group of HSI
