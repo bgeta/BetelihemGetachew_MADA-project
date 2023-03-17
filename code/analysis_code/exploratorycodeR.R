@@ -16,11 +16,12 @@ library(plyr)  # for data processing/cleaning
 library(dplyr) #for data processing/cleaning
 library(tidyr) #for data processing/cleaning
 library(skimr) #for nice visualization of data 
-library(here)  #to set paths 
+library(here)  #to set paths       
 library(gmodels)#to look at the tables 
 library(ggplot2) #to plot histograms and charts
 library(janitor) # to create crosstabs
 library(vtree)  # to create crosstabs
+library(tidymodels) #for building model
 
 
 ## ---- loaddata --------
@@ -34,59 +35,83 @@ processeddata<-readRDS(data_location)
 
 ## ---- Data Exploration Through Tables --------
 
-## Understanding the Gender and Age(A01) breakdown within each group of HSI 
-table1<-tabyl(processeddata, A01,AGE,HSI)%>%
+## Understanding the Gender and Age(A01) breakdown within each group of HSI. Also if anyone knows how to order the response options in order rom 
+#low to high it would be great for example Education ...no formal, primary, secondary, higher than secondary 
+table1 <-tabyl(processeddata, A01,HSI)%>%
   adorn_percentages("col")%>%
   adorn_pct_formatting(digits=1)
-## Understanding the Education and Employement breakdown within ech group of HSI
-tabyl(processeddata, A04,A05, HSI)%>%
+## Understanding the Education breakdown within ech group of HSI
+table2 <-tabyl(processeddata, A04, HSI)%>%
   adorn_percentages("col")%>%
   adorn_pct_formatting(digits=1)
 ## Understanding the Wealth and Education breakdown within ech group of HSI
-tabyl(processeddata, Wealth,A11,HSI)%>%
+table3 <- tabyl(processeddata, Wealth, HSI)%>%
   adorn_percentages("col")%>%
   adorn_pct_formatting(digits=1)
 ## Understanding the RESIDENCE within ech group of HSI
-tabyl(processeddata, RESIDENCE,HSI)%>%
+table4 <- tabyl(processeddata, RESIDENCE,HSI)%>%
   adorn_percentages("col")%>%
   adorn_pct_formatting(digits=1)
-## Understanding smoking status and behavior/frequency breakdown within each group of HSI. 
-tabyl(processeddata, B01,B07,HSI)%>%
-  adorn_percentages("col")%>%
-  adorn_pct_formatting(digits=1)
-## Understanding the quit intentions breakdown within each group of HSI
-tabyl(processeddata,D08,HSI)%>%
+## Understanding smoking quit intention within each group of HSI. 
+table5 <- tabyl(processeddata,D08,HSI)%>%
   adorn_percentages("col")%>%
   adorn_pct_formatting(digits=1)
 
+
+#save the above created 5 tables in the results folder 
 ## ---- Save Tables --------
 
 # save the above collection of tables to file
 save_summary_location <- here::here("results","table1.rds")
 saveRDS(table1, file = save_summary_location) 
 
+save_summary_location <- here::here("results","table2.rds")
+saveRDS(table2, file = save_summary_location) 
+
+save_summary_location <- here::here("results","table3.rds")
+saveRDS(table3, file = save_summary_location) 
+
+save_summary_location <- here::here("results","table4.rds")
+saveRDS(table4, file = save_summary_location) 
+
+save_summary_location <- here::here("results","table5.rds")
+saveRDS(table5, file = save_summary_location) 
+
 
 ## ---- Data Exploration Through Figures --------
 
 ## Understanding the distribution of age when participant started smoking daily
+
+ggplot(processeddata,aes(HSI,AGE))+geom_col()
+
 ggplot(processeddata)+
-  aes(x=B04)+ geom_histogram(bins=30L,fill="#0c4c8a")+
+  aes(x=AGE)+ geom_histogram(bins=30L,fill="#0c4c8a")+
   theme_minimal()
-# take 2
-figure1 <- ggplot(processeddata,aes(HSI,B04))+geom_boxplot()
 
-## ---- Save Figures as png files --------
+processeddata %>%
+  ggplot( aes(x=HSI, y=BO4, fill=HSI)) +
+  geom_boxplot() +
+ 
 
-figure1 <- ggplot(processeddata,aes(HSI,B04))+geom_boxplot()
-plot(figure1)+title("HSI and AGE of when participant began daily smoking")
+## ---- Save Figures as png files  --------
+
+figure1 <- ggplot(processeddata,aes(HSI,AGE))+geom_boxplot()
+plot(figure1)+title("HSI and Current Age")
 figure_file <- here::here("results","figure1.png")
 ggsave(filename = figure_file, plot=figure1)
 
-figure2 <- ggplot(processeddata)+
-  aes(x=B04)+ geom_histogram(bins=30L,fill="#0c4c8a")+
-  theme_minimal()+ title("Histogram_HSI and AGE of daily smoking")
-plot(figure2)
+
+figure2 <- ggplot(processeddata,aes(HSI,B04))+geom_boxplot()
+plot(figure2)+title("HSI and Age of smoking Initiation")
 figure_file <- here::here("results","figure2.png")
 ggsave(filename = figure_file, plot=figure2)
+
+#the below three figures saved using the plots tab on the menu. I attempted to write a code but it didnt work
+
+figure3<-mosaicplot(HSI~A01,data=processeddata,col=c("Blue","Pink"))
+
+figure4<-mosaicplot(HSI~D08,data=processeddata,col=c("Green","Gray"))
+
+figure5<-mosaicplot(HSI~A04,data=processeddata,col=c("Blue","Red","Pink","Purple"))
 
 

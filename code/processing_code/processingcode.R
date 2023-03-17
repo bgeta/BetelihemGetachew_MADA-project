@@ -53,12 +53,12 @@ head(rawdata)
 #B04 (Age when you first started smoking daily), B07 (smoking how soon after you wake up),B06A (number of cigarettes smoked), B07 (how soon after you wake you do you usually smoke ( 1-within 5 minutes, 2 - 6 to 30 minutes, 3 -  31 to 60 minutes, 4 -  more than 60 minutes))
 # Cessation  - D08 ( thinking about quitting, 1 -  quit within the next month, 2 -  thiking within teh next 12 months, 3 -  quit someday but not next 12 months, 4 -  not interested in quitting)
 #Media - G201A1 (noticed information about the dangers of tobacco products 1 - Yes, 2 - No 7- dont know), G201B2 (noticed on televeision)
-# G201C1 on Radion , G201D1 on billboards, G201E1 (somewhere else), 
+# G201C1 on Radion , G201D1 on billboards, G201E1 (somewhere else), D01 quit attempt
 #G202 (notice warnings on cig packages)
 
 ## ---- cleandata1 --------
 
-#reducing the variables from 608 to 17 variables by sub-setting for variables of interest AS indicated above and assinging the appropriate class  
+#reducing the variables from 608 to 13 variables by sub-setting for variables of interest AS indicated above and assinging the appropriate class  
 
 rawdata1<- rawdata[,c("A01", "A11","RESIDENCE", "AGE","A04", "A05", "Wealth", "B01","B04","B07","B06A", "D08","D01")]
 
@@ -72,7 +72,7 @@ rawdata2=subset(rawdata1, B01 !=3)
 View(rawdata2)
 dim(rawdata2)
 
-#The dataset now has 631 observations and 17 variables 
+#The dataset now has 631 observations and 13 variables 
 
 ## ---- cleandata3 --------
 #now add the computed variable of interest HSI Heavy smoking Index by adding B01 and B07,
@@ -82,7 +82,7 @@ View(rawdata2)
 #check if appropriatly added 
 View(rawdata2)
 dim(rawdata2)
-#we now have 631 observations and 18 variables 
+#we now have 631 observations and 14 variables 
 
 ## ---- cleandata3 --------
 #checking for outliers and other odd observations 
@@ -143,7 +143,7 @@ View(df_rawdata7)
 dim(df_rawdata7)
 names(df_rawdata7)
 str(df_rawdata7)
-#With the removal of missing values, the datset now has 416 observations and 18 variables 
+#With the removal of missing values, the datset now has 416 observations and 14 variables 
 
 ## ---- cleandata4 --------
 # Inspecting the data, we find some problems that need addressing:
@@ -164,8 +164,8 @@ skimr::skim(df_rawdata7)
 
 #accuratley designate the class for each of the variables add  
 df_rawdata7$A01 <- as.factor(df_rawdata7$A01)
-df_rawdata7$A11 <- as.factor(df_rawdata7$A11)
-df_rawdata7$AGE <- as.numeric(df_rawdata7$AGE)
+df_rawdata7$A11 <- as.numeric(df_rawdata7$A11)
+df_rawdata7$AGE <- as.integer(df_rawdata7$AGE)
 df_rawdata7$A04 <- as.numeric(df_rawdata7$A04)
 df_rawdata7$RESIDENCE <- as.factor(df_rawdata7$RESIDENCE)
 df_rawdata7$A05 <- as.factor(df_rawdata7$A05)
@@ -187,86 +187,85 @@ df_rawdata7$HSI[df_rawdata7$HSI==0 | df_rawdata7$HSI==1 | df_rawdata7$HSI==2] <-
 df_rawdata7$HSI[df_rawdata7$HSI==3 | df_rawdata7$HSI==4] <- 1
 df_rawdata7$HSI[df_rawdata7$HSI==5 | df_rawdata7$HSI==6] <- 2
 
+#categorize D08 Thinking about quitting 1 Yes, 0 No
 df_rawdata7$D08[df_rawdata7$D08==1 | df_rawdata7$D08==2] <- 1
 df_rawdata7$D08[df_rawdata7$D08==3 | df_rawdata7$D08==4] <- 0
 
+#categorize A04 level of Education into no formal 0, primary 1, secondary 2, college 3
+df_rawdata7$A04[df_rawdata7$A04==1]<-0
+df_rawdata7$A04[df_rawdata7$A04==2 |df_rawdata7$A04==3] <- 1
+df_rawdata7$A04[df_rawdata7$A04==4 |df_rawdata7$A04==5|df_rawdata7$A04==6  |df_rawdata7$A04==7] <- 2
+df_rawdata7$A04[df_rawdata7$A04==8 |df_rawdata7$A04==9]<-3
 
 
-#check your changes here 
+#categorize A05 Employment 1 Employed, 0 Unemployed , still tyring to resolve why this categorization didnt work
+               
+#df_rawdata7$A05[df_rawdata7$A05==1 |df_rawdata7$A05==2|df_rawdata7$A05==3] <- 1
+#df_rawdata7$A05[df_rawdata7$A05==4 |df_rawdata7$A05==5|df_rawdata7$A05==6 |df_rawdata7$A05==7|df_rawdata7$A05==8] <- 0
+
+#categorize A11 Marital Status 0 Single, 1 Married till tyring to resolve why this categorization didnt work
+#df_rawdata7$A11[df_rawdata7$A11==1 |df_rawdata7$A11==3|df_rawdata7$A11==4 |df_rawdata7$A11==5] <- 0
+#df_rawdata7$A11[df_rawdata7$A11==2 ] <- 1
+
+#catagorize RESIDENCE into Rural 0 and Urban 1
+df_rawdata7$RESIDENCE[df_rawdata7$RESIDENCE==2 ] <- 0
+df_rawdata7$RESIDENCE[df_rawdata7$RESIDENCE==1 ] <- 1
+
+#Catagorize D01 Attempt to quit 1 Yes,2 No
+df_rawdata7$D01[df_rawdata7$D01==2 ] <- 0
+df_rawdata7$D01[df_rawdata7$D01==1 ] <- 1
+
+#Catagorize D08 thinking about quitting 1 Yes,2 No
+df_rawdata7$D08[df_rawdata7$D08==1|df_rawdata7$D08==2 ] <- 1
+df_rawdata7$D08[df_rawdata7$D08==3|df_rawdata7$D08==4 |df_rawdata7$D08==7] <- 0
+
 View(df_rawdata7)
+
+#remove additional variable that will not be used for now i have removed A11 and A05 because i contiune to get NA
+#in my attempt to catagorize so until i figure that out i have removed them. 
+
+#it looks lsike D01 has many missing data lets check 
+sum(is.na(df_rawdata7$D01))
+#Also remove D01 too many missing values 
+#check your changes here 
+
+#final variables of interest 
+df_rawdata8<- df_rawdata7[,c("A01","RESIDENCE", "AGE","A04", "Wealth", "B04", "D08","HSI")]
+View(df_rawdata8)
+#adust age to show with 0 deciman place 
 #labeling the values 
 
-df_rawdata8 <- df_rawdata7 %>%
+
+df_rawdata9 <- df_rawdata8 %>%
   
   mutate(A01 = case_when(
     A01 == "1" ~ "Male",
     A01 == "2" ~ "Female")) %>%
 
-mutate(AGE= case_when(
-  AGE >= 15 & AGE < 25 ~ "15 to 24", 
-  AGE >= 25 & AGE < 45 ~ "25 to 44",
-  AGE >= 45 & AGE < 65 ~ "45 to 64",
-  AGE >= 65 ~ "65+")) %>%
 
 mutate(A04 = case_when(
-  A04 == "1" ~ "No Formal Education",
-  A04 == "2" ~ "Primary Education",
-  A04 == "3" ~ "Primary Education",
-  A04 == "4" ~ "Secondary Education",
-  A04 == "5" ~ "Secondary Education",
-  A04 == "6" ~ "Secondary Education",
-  A04 == "7" ~ "Secondary Education",
-  A04 == "8" ~ "Higher than Secondary Education",
-  A04 == "9" ~ "Higher than Secondary Education")) %>%
+  A04 == "0" ~ "No Formal Education",
+  A04 == "1" ~ "Primary Education",
+  A04 == "2" ~ "Secondary Education",
+  A04 == "3" ~ "College and above")) %>%
   
-  mutate(A05 = case_when(
-    A05 == "1" ~ "Employed",
-    A05 == "2" ~ "Employed",
-    A05 == "3" ~ "Employed",
-    A05 == "4" ~ "Student",
-    A05 == "5" ~ "Homemaker",
-    A05 == "6" ~ "Retired or Unemployed",
-    A05 == "7" ~ "Retired or Unemployed",
-    A05 == "8" ~ "Retired or Unemployed")) %>%
-  
+
   mutate(Wealth = case_when(
     Wealth == "1" ~ "Lowest",
     Wealth == "2" ~ "Low",
     Wealth == "3" ~ "Middle",
     Wealth == "4" ~ "High",
     Wealth == "5" ~ "Higher")) %>%
-  
-  mutate(A11 = case_when(
-    A11 == "1" ~ "Single",
-    A11 == "2" ~ "Married",
-    A11 == "3" ~ "Single",
-    A11 == "4" ~ "Single",
-    A11 == "5" ~ "Single")) %>%
 
   mutate(RESIDENCE = case_when(
     RESIDENCE == "1" ~ "Urban",
-    RESIDENCE == "2" ~ "Rural")) %>%
-  
-  mutate(B01 = case_when(
-    B01 == "1" ~ "Daily",
-    B01 == "2" ~ "Less than Daily",
-    B01 == "3" ~ "Not at all")) %>%
-  
-  mutate(B07 = case_when(
-    B07 == "1" ~ "Within 5 Minutes",
-    B07 == "2" ~ "6 to 30 Minutes",
-    B07 == "3" ~ "31 to 60 Minutes",
-    B07 == "4" ~ "More than 60 Minutes")) %>%
-  
+    RESIDENCE == "0" ~ "Rural")) %>%
+
   mutate(D08 = case_when(
     D08 == "0" ~ "No",
     D08 == "1" ~ "Yes")) %>%
   
-  mutate(D01 = case_when(
-    D01=="2"~"No",
-    D01=="1"~"Yes"
-  ))  %>%
-  
+
   mutate(HSI = case_when(
     HSI == "0" ~ "Low Addiction",
     HSI == "1" ~ "Medium  Addiction",
@@ -274,38 +273,31 @@ mutate(A04 = case_when(
 )) 
 
 #added labels for clarity of variables but it didnt work 
-df_rawdata8 %>% dplyr::rename(
+df_rawdata9 %>% dplyr::rename(
   Gender = A01,
-  Marital_Status=A11,
   Educational_level=A04,
-  Employment_Status=A05,
-  Current_Smoking_Status=B01,
   Age_smoking_Initiation=B04,
-  Smoke_after_waking_up=B07,
-  Cigaratte_smoked_daily=B06A,
-  Quit_Intention=D08,
-  Quit_attempt=D01
+  Quit_Intention=D08
 )
 #check if labels are now changed 
-head(df_rawdata8)
-str(df_rawdata8)
+head(df_rawdata9)
+str(df_rawdata9)
 
-xtabs (~HSI+A01,data=df_rawdata8)#given the small number of females in this sample should we remove females from the model?
-xtabs (~HSI+A11,data=df_rawdata8)# table for HSI and Marital status
-xtabs (~HSI+A04,data=df_rawdata8)#table for HSI and Educational level
-xtabs (~HSI+A05,data=df_rawdata8)#table for HSI and Emoloyment status
-xtabs (~HSI+B01,data=df_rawdata8)
-xtabs (~HSI+B07,data=df_rawdata8)#table for HSI and smoke after waking up
-xtabs (~HSI+D01,data=df_rawdata8)#table for HSI and quit attempt
-xtabs (~HSI+D08,data=df_rawdata8)#table for HSI and quit intention
+xtabs (~HSI+A01,data=df_rawdata9)#HSI and Gender 
+xtabs (~HSI+A04,data=df_rawdata9)#table for HSI and Education
+xtabs (~HSI+Wealth,data=df_rawdata9)#table for HSI and Wealth
+xtabs (~HSI+RESIDENCE,data=df_rawdata9) # HSI and RESIDENCE
+xtabs (~HSI+D08,data=df_rawdata9)#table for HSI and quit intention
+#the mean for the two continous variables current age and age of initiation 
+ddply(df_rawdata9, .(HSI), summarise, mean(AGE))
+ddply(df_rawdata9, .(HSI), summarise, mean(B04))
 
-
-View(df_rawdata8)
+View(df_rawdata9)
 ## ---- cleandata5 --------
 
 
 ## ---- savedata --------
-processeddata <- df_rawdata8
+processeddata <- df_rawdata9
 
 # location to save file
 save_data_location <- here::here("data","processed_data","processeddata.rds")

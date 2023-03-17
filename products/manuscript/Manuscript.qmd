@@ -120,7 +120,7 @@ reduced by including only daily and less than daily smokers leaving a
 total of 631 observations. The dataset was examined for outliers,
 distribution, class appropriation. Recatagorization of response options
 was conducted when appropriate. After the removal of missing and outlier
-values, a total of 416 observations and 18 variables were saved for data
+values, a total of 416 observations and 8 variables were saved for data
 exploration.
 
 ![](images/paste-89A08E08.png){width="343"}
@@ -147,38 +147,53 @@ exploration are saved under code/analysis_code with a file name of
 exploratorycodeR.R. All tables and figures listed below are saved under
 results folder
 
-@table1 shows a summary of the data.
+@figure1 shows a boxplot showing HSI Group mean by age 
 
-@figure1 shows boxplots
-
-@figure2 shows histogram 
-
-
-#I unfortunately was not able to pull in the tables and figures saved in the results folder. The below are the codes i used. I have turned them into texts to allow for the document to render without errors
-#```{r}
-#| label: Summary Tables of variables of Interest
-#| tbl-cap: "Data summary table."
+```{r}
+#| label: figure1
+#| fig-cap: "HSI By Age."
 #| echo: FALSE
-#table1=readRDS("../../results/table1.rds")
-#knitr::kable(table1)
-#```
+knitr::include_graphics(here("results","figure1.png"))
+```
 
+@figure2 shows a boxplot showing HSI Group mean age of smoking initiation
 
-#```{r}
-#| label: BHistogram by AGE participant became daily smoker and HSI
-#| tbl-cap: "Boxplot."
+```{r}
+#| label: figure2
+#| fig-cap: "HSI By Age of smoking Initiation."
 #| echo: FALSE
-#knitr::include_graphics(here("results","Histogram_HSI_and_AGE_daily_smoking".png))
-#```
+knitr::include_graphics(here("results","figure2.png"))
+```
 
-#```{r}
-#| label: Histogram by AGE participant became daily smoker and HSI
-#| tbl-cap: "Data summary table."
+@figure3 shows HSI and Gender
+
+```{r}
+#| label: figure3
+#| fig-cap: "HSI and Gender."
 #| echo: FALSE
-#figure2=readPNG("../../results/figure2.png")
-#knitr::kable(figure2)
-#```
+knitr::include_graphics(here("results","figure3_HSI and Gender.png"))
+```
+
+@figure4 shows HSI and quit attempt
+```{r}
+#| label: figure4
+#| fig-cap: "HSI and quit attempt."
+#| echo: FALSE
+knitr::include_graphics(here("results","figure4_HSI and Quit attempt.png"))
+```
+
+@figure5 shows HSI and quit attempt
+```{r}
+#| label: figure5
+#| fig-cap: "HSI and quit attempt."
+#| echo: FALSE
+knitr::include_graphics(here("results","figure5_HSI and Education.png"))
+```
+
+  
 ## Basic statistical analysis
+
+#Over here, I couldnt figure out how to graph the model results. The model resutsl table are under the results folder. I do realize my model fits need quite some work but I welcome your comments and suggestions. I particulary wanted to use the tidymodels for Ordinal Regression Model.    
 
 
 ## Full analysis
