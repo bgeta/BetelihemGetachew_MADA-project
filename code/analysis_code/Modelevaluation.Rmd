@@ -1,0 +1,356 @@
+---
+title: "5 fold logistic regression using tidymodels"
+date: "`r Sys.Date()`"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, fig.width = 8, fig.height = 5)
+library(tidyverse)
+library(tidymodels)
+
+```
+
+removing any missing data
+
+```{r}
+processeddata <- na.omit(processeddata)
+processeddata <- as.data.frame(unclass(processeddata), stringsAsFactors = TRUE)
+```
+
+## Build models
+
+**Train and Test Split and resampling folds**
+
+-   create training and testing sets
+-   create re-sampling folds from the *training* set
+
+```{r}
+set.seed(123)
+processed_split <- initial_split(processeddata, strata=HSI)
+
+HSI_train <- training(processed_split)
+HSI_test <- testing(processed_split)
+
+set.seed(234)
+HSI_folds<-vfold_cv(data=HSI_train,v=5,Strata=HSI)
+HSI_folds
+```
+
+```{r}
+view(HSI_train)
+```
+
+**Setup recipe** #all predictors
+
+```{r}
+HSI_rec <- 
+  recipe(HSI ~ A01+ RESIDENCE + AGE + A04 + A05 + A11 + Wealth + B04 + D08 + D01,data=processed_train)%>% 
+  step_dummy(all_nominal_predictors())
+```
+
+**Setup Model specifications**
+
+```{r}
+HSI_model <-
+  logistic_reg() %>%
+  set_engine("glm")%>%
+set_mode("classification")
+
+HSI_model
+```
+
+**Setup Workflow**
+
+```{r}
+HSI_wf <- workflow() %>%
+  add_model(HSI_model) %>%
+  add_recipe(HSI_rec)
+
+HSI_wf
+```
+
+**Fit trained workflow model to training dataset**
+
+```{r}
+fit_HSI <- 
+HSI_wf %>% 
+  fit(data = HSI_train)
+```
+
+We can now fit the above workflow to the re sampling folds
+
+```{r}
+doParallel::registerDoParallel()
+ctrl_preds <- control_resamples(save_pred = TRUE)
+rs_HSI <- fit_resamples(HSI_wf, HSI_folds, control = ctrl_preds)
+```
+
+Take a look at the accuracy metrics
+
+```{r}
+collect_metrics(rs_HSI)
+```
+
+The accuracy of .52 doesn't seem so great with this model.
+
+Now lets look at the roc curve, it looks like we have an over fit here
+
+```{r}
+model1 <- augment(rs_HSI) %>%
+  roc_curve(HSI, .pred_HighAddiction) %>%
+  autoplot()
+```
+
+Using trained workflow to predict test data set
+
+```{r}
+predict(fit_HSI,HSI_test,type="prob")
+```
+
+look at the model and test data together using the augment function
+
+```{r}
+HSI_aug <- 
+  augment(fit_HSI,HSI_test,type="prob")
+```
+
+Plot the ROC curve
+
+```{r}
+
+ROC_Mod1 <- HSI_aug %>% 
+roc_curve(truth=HSI,.pred_LowAddiction) %>%
+  autoplot()
+
+```
+
+# Using roc_auc() to get the estimates
+
+```{r}
+model1<-HSI_aug %>% 
+  roc_auc(truth = HSI,.pred_LowAddiction)
+```
+
+#saving the table for model 1
+
+```{r}
+
+save_summary_location <- here::here("results","model1.rds")
+
+saveRDS(model1, file = save_summary_location)
+```
+
+## ***Model II using Bo4 (Age of smoking initiation as the main predictor)***
+
+**Setup recipe**
+
+```{r}
+HSI_rec2 <- 
+  recipe(HSI ~ B04,data=HSI_train)%>% 
+  step_dummy(all_nominal_predictors())
+```
+
+**Setup Model specifications**
+
+```{r}
+HSI_model2 <-
+  logistic_reg() %>%
+  set_engine("glm")%>%
+set_mode("classification")
+
+HSI_model2
+```
+
+**Setup Workflow**
+
+```{r}
+HSI_wf2 <- workflow() %>%
+  add_model(HSI_model) %>%
+  add_recipe(HSI_rec2)
+
+HSI_wf2
+```
+
+**Fit trained workflow model to training data set**
+
+```{r}
+fit_HSI2 <- 
+HSI_wf2 %>% 
+  fit(data = HSI_train)
+```
+
+We can now fit the above workflow to the re sampling folds
+
+```{r}
+doParallel::registerDoParallel()
+ctrl_preds <- control_resamples(save_pred = TRUE)
+rs_HSI2 <- fit_resamples(HSI_wf2, HSI_folds, control = ctrl_preds)
+```
+
+Take a look at the accuracy metrics
+
+```{r}
+collect_metrics(rs_HSI2)
+```
+
+The accuracy of .56 doesnt seem to have improved in this model.
+
+Now lets look at the roc curve, it looks like we have an over fit here
+
+```{r}
+model2 <- augment(rs_HSI2) %>%
+  roc_curve(HSI, .pred_HighAddiction) %>%
+  autoplot()
+```
+
+Using trained workflow to predict test data set
+
+```{r}
+predict(fit_HSI2,HSI_test,type="prob")
+```
+
+look at the model and test data together using the augment function
+
+```{r}
+HSI_aug2 <- 
+  augment(fit_HSI2,HSI_test,type="prob")
+```
+
+Plot the ROC curve
+
+```{r}
+
+ROC_Mod2 <- HSI_aug2%>% 
+roc_curve(truth=HSI,.pred_LowAddiction) %>%
+  autoplot()
+
+```
+
+#### Using roc_auc() to get the estimates
+
+```{r}
+model2<-HSI_aug2 %>% 
+  roc_auc(truth = HSI,.pred_LowAddiction)
+```
+
+The full model seems to perform better with an roc_auc of .52
+
+```{r}
+save_summary_location <- here::here("results","model2.rds")
+saveRDS(model2, file = save_summary_location)
+```
+
+## ***Model III using Bo4,D01 and Do8 (Age of smoking initiation, quit attempt, quit interest as the main predictors)***
+
+**Setup recipe**
+
+```{r}
+HSI_rec3 <- 
+  recipe(HSI ~ B04,D01,D08,data=HSI_train)%>% 
+  step_dummy(all_nominal_predictors())
+```
+
+**Setup Model specifications**
+
+```{r}
+HSI_model3 <-
+  logistic_reg() %>%
+  set_engine("glm")%>%
+set_mode("classification")
+
+HSI_model3
+```
+
+**Setup Workflow**
+
+```{r}
+HSI_wf3 <- workflow() %>%
+  add_model(HSI_model) %>%
+  add_recipe(HSI_rec3)
+
+HSI_wf3
+```
+
+**Fit trained workflow model to training data set**
+
+```{r}
+fit_HSI3 <- 
+HSI_wf3 %>% 
+  fit(data = HSI_train)
+```
+
+We can now fit the above workflow to the re sampling folds
+
+```{r}
+doParallel::registerDoParallel()
+ctrl_preds <- control_resamples(save_pred = TRUE)
+rs_HSI3 <- fit_resamples(HSI_wf3, HSI_folds, control = ctrl_preds)
+```
+
+Take a look at the accuracy metrics
+
+```{r}
+collect_metrics(rs_HSI3)
+```
+
+The accuracy of .56 very small imporvement .
+
+Now lets look at the roc curve, it looks like we have an over fit here
+
+```{r}
+augment(rs_HSI3) %>%
+  roc_curve(HSI, .pred_HighAddiction) %>%
+  autoplot()
+```
+
+Using trained workflow to predict test data set
+
+```{r}
+predict(fit_HSI3,HSI_test,type="prob")
+```
+
+look at the model and test data together using the augment function
+
+```{r}
+HSI_aug3 <- 
+  augment(fit_HSI3,HSI_test,type="prob")
+```
+
+Plot the ROC curve
+
+```{r}
+
+ROC_Mod3 <- HSI_aug3%>% 
+roc_curve(truth=HSI,.pred_LowAddiction) %>%
+  autoplot()
+
+```
+
+#### Using roc_auc() to get the estimates
+
+```{r}
+model3 <-HSI_aug3 %>% 
+  roc_auc(truth = HSI,.pred_LowAddiction)
+```
+
+```{r}
+save_summary_location <- here::here("results","model3.rds")
+saveRDS(model3, file = save_summary_location)
+```
+
+#save your ROC plots
+```{r}
+figure_file <- here::here("results","ROC_Mod1.png")
+ggsave(filename = figure_file, plot=ROC_Mod1)
+```
+
+```{r}
+figure_file <- here::here("results","ROC_Mod2.png")
+ggsave(filename = figure_file, plot=ROC_Mod2)
+```
+
+```{r}
+figure_file <- here::here("results","ROC_Mod3.png")
+ggsave(filename = figure_file, plot=ROC_Mod3)
+```

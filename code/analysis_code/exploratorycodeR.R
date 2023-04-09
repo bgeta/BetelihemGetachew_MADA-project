@@ -22,6 +22,8 @@ library(ggplot2) #to plot histograms and charts
 library(janitor) # to create crosstabs
 library(vtree)  # to create crosstabs
 library(tidymodels) #for building model
+library(table1)
+library("kableExtra") # For producing a nice table 1
 
 
 ## ---- loaddata --------
@@ -34,6 +36,19 @@ processeddata<-readRDS(data_location)
 ## ---- exploredata --------
 
 ## ---- Data Exploration Through Tables --------
+
+
+library(table1)
+Table1_Demographics <- (table1(~ factor(A01) + AGE +B04+ factor(A04) + factor(A05) + factor(Wealth)+factor(A11)+factor(RESIDENCE)+factor(D01)+factor(D08) | HSI, data=processeddata))
+
+Table1_Demographics <- t1kable(Table1_Demographics)
+Table1_Demographics
+
+
+#save demographics table under results 
+
+save_summary_location <- here::here("results","Table1_Demographics.rds")
+saveRDS(Table1_Demographics, file = save_summary_location) 
 
 ## Understanding the Gender and Age(A01) breakdown within each group of HSI. Also if anyone knows how to order the response options in order rom 
 #low to high it would be great for example Education ...no formal, primary, secondary, higher than secondary 
@@ -82,15 +97,13 @@ saveRDS(table5, file = save_summary_location)
 
 ## Understanding the distribution of age when participant started smoking daily
 
-ggplot(processeddata,aes(HSI,AGE))+geom_col()
-
 ggplot(processeddata)+
   aes(x=AGE)+ geom_histogram(bins=30L,fill="#0c4c8a")+
   theme_minimal()
 
 processeddata %>%
-  ggplot( aes(x=HSI, y=BO4, fill=HSI)) +
-  geom_boxplot() +
+  ggplot( aes(x=HSI, y=B04, fill=HSI)) +
+  geom_boxplot() 
  
 
 ## ---- Save Figures as png files  --------

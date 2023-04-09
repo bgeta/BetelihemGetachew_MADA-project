@@ -91,8 +91,6 @@ hist(rawdata2$HSI)
 df_rawdata3 <- rawdata2 %>% 
   filter(!HSI %in% c(10))
 
-View(df_rawdata2)
-
 #check if outlier removed 
 View(df_rawdata3)
 hist(df_rawdata3$HSI)
@@ -115,6 +113,7 @@ df_rawdata4<-subset(df_rawdata3, B04!=99)
 df_rawdata4<-subset(df_rawdata3, AGE!=99)
 #check if removed
 summary(df_rawdata4$AGE)
+summary(df_rawdata4$A04)
 summary(df_rawdata4$B04)
 #it looks like there is a value of 99 and 77 for refused and dont know that need to be removed
 df_rawdata5<-subset(df_rawdata4, A05!=99)
@@ -143,7 +142,7 @@ View(df_rawdata7)
 dim(df_rawdata7)
 names(df_rawdata7)
 str(df_rawdata7)
-#With the removal of missing values, the datset now has 416 observations and 14 variables 
+#With the removal of missing values, the datset now has 418 observations and 14 variables 
 
 ## ---- cleandata4 --------
 # Inspecting the data, we find some problems that need addressing:
@@ -164,7 +163,7 @@ skimr::skim(df_rawdata7)
 
 #accuratley designate the class for each of the variables add  
 df_rawdata7$A01 <- as.factor(df_rawdata7$A01)
-df_rawdata7$A11 <- as.numeric(df_rawdata7$A11)
+df_rawdata7$A11 <- as.factor(df_rawdata7$A11)
 df_rawdata7$AGE <- as.integer(df_rawdata7$AGE)
 df_rawdata7$A04 <- as.numeric(df_rawdata7$A04)
 df_rawdata7$RESIDENCE <- as.factor(df_rawdata7$RESIDENCE)
@@ -182,10 +181,10 @@ df_rawdata7$HSI <- as.numeric(df_rawdata7$HSI)
 
 ## ---- cleandata5 --------
 
-#catagorize HSI scores by 0 for scores 0-2, 1 for scores 3 to 4,2 for scores 5-6scores in low addiction(score 0,1,2,3), high addiction (4,5,6-6).
-df_rawdata7$HSI[df_rawdata7$HSI==0 | df_rawdata7$HSI==1 | df_rawdata7$HSI==2] <- 0
-df_rawdata7$HSI[df_rawdata7$HSI==3 | df_rawdata7$HSI==4] <- 1
-df_rawdata7$HSI[df_rawdata7$HSI==5 | df_rawdata7$HSI==6] <- 2
+#catagorize HSI scores by 0 for scores 0-3 indicating low dependence and 1 for scores 4 to 6 indicating high dependence
+df_rawdata7$HSI[df_rawdata7$HSI==0 | df_rawdata7$HSI==1 | df_rawdata7$HSI==2 | df_rawdata7$HSI==3] <- 0
+df_rawdata7$HSI[df_rawdata7$HSI==4 | df_rawdata7$HSI==5| df_rawdata7$HSI==6] <- 1
+
 
 #categorize D08 Thinking about quitting 1 Yes, 0 No
 df_rawdata7$D08[df_rawdata7$D08==1 | df_rawdata7$D08==2] <- 1
@@ -198,39 +197,37 @@ df_rawdata7$A04[df_rawdata7$A04==4 |df_rawdata7$A04==5|df_rawdata7$A04==6  |df_r
 df_rawdata7$A04[df_rawdata7$A04==8 |df_rawdata7$A04==9]<-3
 
 
-#categorize A05 Employment 1 Employed, 0 Unemployed , still tyring to resolve why this categorization didnt work
+#categorize A05 Employment 2 Employed, 1 Unemployed , still trying to resolve why this categorization didnt work
                
-#df_rawdata7$A05[df_rawdata7$A05==1 |df_rawdata7$A05==2|df_rawdata7$A05==3] <- 1
-#df_rawdata7$A05[df_rawdata7$A05==4 |df_rawdata7$A05==5|df_rawdata7$A05==6 |df_rawdata7$A05==7|df_rawdata7$A05==8] <- 0
+df_rawdata7$A05[df_rawdata7$A05==1 |df_rawdata7$A05==2|df_rawdata7$A05==3] <- 2
+df_rawdata7$A05[df_rawdata7$A05==4 |df_rawdata7$A05==5|df_rawdata7$A05==6 |df_rawdata7$A05==7|df_rawdata7$A05==8] <- 1
 
-#categorize A11 Marital Status 0 Single, 1 Married till tyring to resolve why this categorization didnt work
-#df_rawdata7$A11[df_rawdata7$A11==1 |df_rawdata7$A11==3|df_rawdata7$A11==4 |df_rawdata7$A11==5] <- 0
-#df_rawdata7$A11[df_rawdata7$A11==2 ] <- 1
+#categorize A11 Marital Status 1 Single, 2 Married till tyring to resolve why this categorization didnt work
+df_rawdata7$A11[df_rawdata7$A11==1 |df_rawdata7$A11==3|df_rawdata7$A11==4 |df_rawdata7$A11==5] <- 1
+df_rawdata7$A11[df_rawdata7$A11==2 ] <- 2
 
-#catagorize RESIDENCE into Rural 0 and Urban 1
-df_rawdata7$RESIDENCE[df_rawdata7$RESIDENCE==2 ] <- 0
+#catagorize RESIDENCE into Rural 2 and Urban 1
+df_rawdata7$RESIDENCE[df_rawdata7$RESIDENCE==2 ] <- 2
 df_rawdata7$RESIDENCE[df_rawdata7$RESIDENCE==1 ] <- 1
 
 #Catagorize D01 Attempt to quit 1 Yes,2 No
-df_rawdata7$D01[df_rawdata7$D01==2 ] <- 0
+df_rawdata7$D01[df_rawdata7$D01==2 ] <- 2
 df_rawdata7$D01[df_rawdata7$D01==1 ] <- 1
 
-#Catagorize D08 thinking about quitting 1 Yes,2 No
+#Catagorize D08 thinking about quitting 1 Yes,0 No
 df_rawdata7$D08[df_rawdata7$D08==1|df_rawdata7$D08==2 ] <- 1
 df_rawdata7$D08[df_rawdata7$D08==3|df_rawdata7$D08==4 |df_rawdata7$D08==7] <- 0
 
 View(df_rawdata7)
 
-#remove additional variable that will not be used for now i have removed A11 and A05 because i contiune to get NA
-#in my attempt to catagorize so until i figure that out i have removed them. 
 
 #it looks lsike D01 has many missing data lets check 
 sum(is.na(df_rawdata7$D01))
 #Also remove D01 too many missing values 
 #check your changes here 
 
-#final variables of interest 
-df_rawdata8<- df_rawdata7[,c("A01","RESIDENCE", "AGE","A04", "Wealth", "B04", "D08","HSI")]
+#final variables of interest ..removed B01, B07 and B06A variables used to subset desired dataset and calculate HSI
+df_rawdata8<- df_rawdata7[,c("A01","RESIDENCE", "AGE","A04","A05","A11", "Wealth", "B04", "D08","D01", "HSI")]
 View(df_rawdata8)
 #adust age to show with 0 deciman place 
 #labeling the values 
@@ -242,13 +239,20 @@ df_rawdata9 <- df_rawdata8 %>%
     A01 == "1" ~ "Male",
     A01 == "2" ~ "Female")) %>%
 
-
+  
+  mutate(A11 = case_when(
+    A11 == "1" ~ "Single",
+    A11 == "2" ~ "Married")) %>%
+  
 mutate(A04 = case_when(
   A04 == "0" ~ "No Formal Education",
   A04 == "1" ~ "Primary Education",
   A04 == "2" ~ "Secondary Education",
   A04 == "3" ~ "College and above")) %>%
   
+  mutate(A05 = case_when(
+    A05 == "2" ~ "Employed",
+    A05 == "1" ~ "Unemployed")) %>%
 
   mutate(Wealth = case_when(
     Wealth == "1" ~ "Lowest",
@@ -259,26 +263,28 @@ mutate(A04 = case_when(
 
   mutate(RESIDENCE = case_when(
     RESIDENCE == "1" ~ "Urban",
-    RESIDENCE == "0" ~ "Rural")) %>%
+    RESIDENCE == "2" ~ "Rural")) %>%
 
   mutate(D08 = case_when(
     D08 == "0" ~ "No",
     D08 == "1" ~ "Yes")) %>%
   
-
+  mutate(D01 = case_when(
+    D01 == "2" ~ "No",
+    D01 == "1" ~ "Yes")) %>%
+  
   mutate(HSI = case_when(
-    HSI == "0" ~ "Low Addiction",
-    HSI == "1" ~ "Medium  Addiction",
-    HSI == "2" ~ "High Addiction"
-)) 
+    HSI == "0" ~ "LowAddiction",
+    HSI == "1" ~ "HighAddiction",
+  )) 
 
 #added labels for clarity of variables but it didnt work 
 df_rawdata9 %>% dplyr::rename(
   Gender = A01,
   Educational_level=A04,
   Age_smoking_Initiation=B04,
-  Quit_Intention=D08
-)
+  Quit_Intention=D08)
+
 #check if labels are now changed 
 head(df_rawdata9)
 str(df_rawdata9)
@@ -293,6 +299,8 @@ ddply(df_rawdata9, .(HSI), summarise, mean(AGE))
 ddply(df_rawdata9, .(HSI), summarise, mean(B04))
 
 View(df_rawdata9)
+
+
 ## ---- cleandata5 --------
 
 

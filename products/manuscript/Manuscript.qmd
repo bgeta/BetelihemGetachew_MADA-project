@@ -59,22 +59,7 @@ The aim of this paper is therefor to;
 
 2.  Explore and Identify predictors of nicotine dependence in Botswana.
 
-To cite other work (important everywhere, but likely happens first in
-introduction), make sure your references are in the bibtex file
-specified in the YAML header above (here
-`dataanalysis_template_references.bib`) and have the right bibtex key.
-Then you can include like this:
-
-Examples of reproducible research projects can for instance be found in
-[@mckay2020; @mckay2020a]
-
-{{< pagebreak >}}
-
 # Methods
-
-*Describe your methods. That should describe the data, the cleaning
-processes, and the analysis approaches. You might want to provide a
-shorter description here and all the details in the supplement.*
 
 This study will conduct a secondary data analysis using the Global Adult
 Tobacco Survey (GATS) Botswana as described above. The survey data
@@ -101,7 +86,18 @@ smoking section on the survey questionnaire ([Heaviness of Smoking Index
 \| Data Share 2.0
 (nih.gov)](https://datashare.nida.nih.gov/instrument/heaviness-of-smoking-index).
 Based on the HSI scores, smokers will be categorized into low addiction
-(score 0-2), medium addiction (score 3-4), high addiction (5-6).
+(score 0-2), medium addiction (score 3-4), high addiction (5-6). For
+this analysis, in consultation with other literature, scores 0 to 3 are
+categorized as low addiction and scores 4 to 6 are categorized as high
+addiction.
+
+## Measurements
+
+The outcome of interest is HSI: Heavy Smoking Index. Independent
+variables explored in this analysis include AGE: Current age of smokers,
+A01: Gender A04:Education level, A05: Employment status, A11: Marital
+Status, RESIDENCE: Residence of participants, B04: Age of smoking
+initiation, D01: Smoking quit attempt, D08: Smoking intent to quit
 
 ## Data import and cleaning
 
@@ -123,7 +119,7 @@ was conducted when appropriate. After the removal of missing and outlier
 values, a total of 416 observations and 8 variables were saved for data
 exploration.
 
-![](images/paste-89A08E08.png){width="343"}
+![](images/paste-89A08E08.png){fig-align="center" width="343"}
 
 ---- exploredata --------
 
@@ -131,82 +127,119 @@ exploration.
 
 *Explain anything related to your statistical analyses.*
 
-{{< pagebreak >}}
-
 # Results
 
 ## Exploratory/Descriptive analysis
 
-In this sample of smokers, a higher proportion of smokers who completed
-secondary education were categorized in all three addiction levels.
-Married individuals with Higher Wealth level were also categorized in
-different level the highest proportion being under high addiction. In
-all three categories of HSI, participants of rural residence were larger
-in proportion than urban residents. All codes related to data
-exploration are saved under code/analysis_code with a file name of
-exploratorycodeR.R. All tables and figures listed below are saved under
-results folder
+In this sample of smokers, males with a median age of 35 years, those
+with secondary education and employed and belonging to the lowest wealth
+index had high nicotine addiction. There was also higher proportion of
+smokers who are single, live in rural for high addiction. Interms of
+behavior, more than half of those in the high addiction catagory made a
+quit attempt. similarly , the majoirty of smokers had no intent to quit
+within the next year . All codes related to data exploration are saved
+under code/analysis_code with a file name of exploratorycodeR.R. All
+tables and figures listed below are saved under results folder
 
-@figure1 shows a boxplot showing HSI Group mean by age 
+@Table1_Demographics Shows the demographics of the sample population
+
+```{r}
+result_table1 <- readRDS(here("results", "Table1_Demographics.rds"))
+result_table1
+```
+
+The data also shows the mean age of those with high addiction to be
+lower than the mean age of those with low addiction. This is contrary to
+the belief that older smokers have higher addiction when compared to
+younger smokers.
+
+@figure1 shows a boxplot showing HSI Group mean by age
 
 ```{r}
 #| label: figure1
 #| fig-cap: "HSI By Age."
 #| echo: FALSE
-knitr::include_graphics(here("results","figure1.png"))
+knitr::include_graphics(here("results","AgeVSHSI.png"))
 ```
 
-@figure2 shows a boxplot showing HSI Group mean age of smoking initiation
+Interms of age of smoking initiation, those in the high addiction group
+have a mean age of smoking initiation slightly higher than those in the
+low addicition group. This again is contrary to the literature out there
+that suggests starting smoking early leads to high addiction in
+adulthood.
+
+@figure2 shows a boxplot showing HSI Group mean age of smoking
+initiation
 
 ```{r}
 #| label: figure2
 #| fig-cap: "HSI By Age of smoking Initiation."
 #| echo: FALSE
-knitr::include_graphics(here("results","figure2.png"))
+knitr::include_graphics(here("results","BO4vsHSI.png"))
 ```
 
-@figure3 shows HSI and Gender
-
-```{r}
-#| label: figure3
-#| fig-cap: "HSI and Gender."
-#| echo: FALSE
-knitr::include_graphics(here("results","figure3_HSI and Gender.png"))
-```
-
-@figure4 shows HSI and quit attempt
-```{r}
-#| label: figure4
-#| fig-cap: "HSI and quit attempt."
-#| echo: FALSE
-knitr::include_graphics(here("results","figure4_HSI and Quit attempt.png"))
-```
-
-@figure5 shows HSI and quit attempt
-```{r}
-#| label: figure5
-#| fig-cap: "HSI and quit attempt."
-#| echo: FALSE
-knitr::include_graphics(here("results","figure5_HSI and Education.png"))
-```
-
-  
 ## Basic statistical analysis
-
-#Over here, I couldnt figure out how to graph the model results. The model resutsl table are under the results folder. I do realize my model fits need quite some work but I welcome your comments and suggestions. I particulary wanted to use the tidymodels for Ordinal Regression Model.    
-
 
 ## Full analysis
 
+A binary 5 fold cross validation logisitc regression was performed.
+Model 1 used all predictors, Model 2 used only thet age of initiation as
+the predictor and model three used cessation behaviors (quit attempt and
+quit intention) as predictors. The tables below represent the results
+for all three models
 
+@Model1 All predictors
 
-{{< pagebreak >}}
+```{r}
+Model_Results1 <- readRDS(here("results", "model1.rds"))
+Model_Results1
+```
+
+@Model2 Age of initiation as predictor
+
+```{r}
+#| label: model2
+model2 <- readRDS(here("results", "model2.rds"))
+model2
+```
+
+@Model3 Quit attempt and quit intent as predictors
+
+```{r}
+#| label: model1
+model3 <- readRDS(here("results", "model3.rds"))
+model3
+```
+
+### Model Evaluation
+
+Model 1 ROC Curve with all predictors
+
+```{r echo=FALSE, out.width = "50%", fig.align = "center"}
+knitr::include_graphics(here("results","ROC_Mod1.png"))
+```
+
+Model 2 ROC Curve with age of smoking initiation only as the predictor
+
+```{r echo=FALSE, out.width = "50%", fig.align = "center"}
+knitr::include_graphics(here("results","ROC_Mod2.png"))
+```
+
+Model 3 ROC Curve with quit attempt and quit intent as predcitors
+
+```{r echo=FALSE, out.width = "50%", fig.align = "center"}
+knitr::include_graphics(here("results","ROC_Mod3.png"))
+```
 
 # Discussion
 
 ## Summary and Interpretation
 
-*Summarize what you did, what you found and what it means.*
+All three models used in this anlaysis had an roc_auc estimate of less
+than .5. This means all three models do not do a good job of predicting
+addiction with any more accuracy than a guess with a 50/50 outcome. This
+also implies further literature review is required to narrow down some
+of the most notable predictors.
 
 ## Strengths and Limitations
 

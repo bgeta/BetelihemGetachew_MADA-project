@@ -28,7 +28,7 @@ Codebook for survey
 you can find it under data/raw_data/Botswana.pdf
 
 Statistical Analysis 
-Oridnal Logistic Regression peformed on one variable at a time. 
+A binary, 5 fold Logistic Regression performed on all, one and three variable at a time. 
 
 
 
