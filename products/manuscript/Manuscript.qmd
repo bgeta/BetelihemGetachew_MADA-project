@@ -86,10 +86,13 @@ smoking section on the survey questionnaire ([Heaviness of Smoking Index
 \| Data Share 2.0
 (nih.gov)](https://datashare.nida.nih.gov/instrument/heaviness-of-smoking-index).
 Based on the HSI scores, smokers will be categorized into low addiction
-(score 0-2), medium addiction (score 3-4), high addiction (5-6). For
-this analysis, in consultation with other literature, scores 0 to 3 are
-categorized as low addiction and scores 4 to 6 are categorized as high
-addiction.
+(score 0-3), medium addiction (score 3-4), high addiction (5-6). For
+this analysis, in consultation with other literature, a cut of score of
+4 was deemed suitable and thus scores 0 to 3 are categorized as low
+addiction and scores 4 to 6 are categorized as high addiction[Heaviness
+of Smoking Index versus Fagerstrom Test for Nicotine Dependence among
+Current Smokers of Ahmedabad City,
+India](https://doi.org/10.22122%2Fahj.v13i1.291).
 
 ## Measurements
 
