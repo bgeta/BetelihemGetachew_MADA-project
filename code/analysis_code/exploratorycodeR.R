@@ -37,6 +37,9 @@ processeddata<-readRDS(data_location)
 
 ## ---- Data Exploration Through Tables --------
 
+processeddata %>%
+  count(HSI)%>%
+  mutate(prop = n/sum(n))
 
 library(table1)
 Table1_Demographics <- (table1(~ factor(A01) + AGE +B04+ factor(A04) + factor(A05) + factor(Wealth)+factor(A11)+factor(RESIDENCE)+factor(D01)+factor(D08) | HSI, data=processeddata))

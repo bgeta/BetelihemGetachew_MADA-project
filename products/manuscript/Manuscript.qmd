@@ -27,6 +27,29 @@ library(haven)
 library(png)
 ```
 
+# Abstract
+
+*Introduction:* Population level nicotine dependence research is very
+limited. Even more limited in low income country like Botswana.
+Understanding the nicotine dependence landscape in a country with low
+smoking prevalence country is important in designing an efficient
+cessation service. *Methods:* This study is a secondary data analysis
+utilizing data collected by Global Adult Tobacco Survey among adults.
+This study examined the 1)Prevalence of nicotine dependence and 2)
+Predictors of nicotine dependence. Results: In this sample of smokers,
+46% were categorized with high addiction. Those who are men, completed
+secondary education, are employed, and in the lowest wealth index
+residing in rural areas and single marital status tend to have high
+nicotine addiction. *Conclusions:* Of all the predictors considered in
+this analysis, age of smoking initiation is the most significant
+predictor of nicotine dependence. *Implications:* Delayed onset of
+smoking initiation is associated with low nicotine dependence. Public
+health interventions should be aimed ensuring countries enforce policies
+that restrict smoking by age. In addition, almost half the smokers were
+high nicotine dependent, given the risk factors associated with smoking,
+strategies to improve access and utilization of cessations service is
+imperative.
+
 # Introduction
 
 ## General Background Information
@@ -59,10 +82,21 @@ The aim of this paper is therefor to;
 
 2.  Explore and Identify predictors of nicotine dependence in Botswana.
 
-# Methods
+## Data import and cleaning
+
+An SPSS data file was [downloaded from GTSS Info
+website](https://nccd.cdc.gov/GTSSDataSurveyResources/Ancillary/DataReports.aspx?CAID=2&Survey=4&WHORegion=3&Country=123&Site=27000)
+and imported into R. The code for importing and cleaning the dataset is
+documented in the R script file titled "processingcode.R". The dataset
+was examined for outliers, distribution, class appropriation.
+Re-catagorization of response options was conducted when appropriate.
+
+## Methods
+
+### Study Sample Design
 
 This study will conduct a secondary data analysis using the Global Adult
-Tobacco Survey (GATS) Botswana as described above. The survey data
+Tobacco Survey (GATS) Botswana as described above. The GATS survey data
 collection was completed in 2017. The sample design is a multi-stage,
 geographically clustered probability sample design to produce nationally
 representative data. First, households are randomly selected, then one
@@ -75,78 +109,67 @@ Global Adult Tobacco Survey implementation process can be found
 elsewhere ([GATS Implementation
 Protocol](https://nccd.cdc.gov/GTSSDataSurveyResources/Ancillary/Documentation.aspx?SUID=4&DOCT=4)).
 
+### Participants
+
+A total of 4,643 individuals completed the GAT's survey. Given the aims
+of this study, examining nicotine addiction prevalence, non-smokers
+(n=4012) were removed from this data analysis. A total of 631
+observations of daily and non daily smokers were retained for anlaysis.
+During data cleaning, 215 observations were deemed unusable data due to
+missing or incorrect entries and thus further removed leaving a final
+study sample of 416 observations.
+
+![](images/paste-79A3A439.png){width="384"}
+
+### Measurement
+
 A total of 608 variables covering topics of socio-demographic, tobacco
 smoking, smokeless tobacco, cessation both smoking and smokeless,
 economics, media and knowledge, attitude and perceptions of tobacco were
-collected in this survey. While the outcome measure of interest
-"Nicotine dependence" is not directly collected, the measure for
-nicotine dependence, also known as the Heavy Smoking Index (HSI), will
-be calculated as a score using two question items from the tobacco
-smoking section on the survey questionnaire ([Heaviness of Smoking Index
-\| Data Share 2.0
+collected in this survey. Inline with the study objectives, 591
+variables were filtered out and only 17 variables related to the study
+objectives were considered for further examination. The 18th variable
+was computed as a score by summing two variables (B01 Do you currently
+smoke daily/less than daily or not at all + B07 How soon after you wake
+up do you usually have your first smoke ) from the tobacco smoking
+section of the survey to create the Heavy Smoking Index (HSI) Score, a
+proxy for examining nicotine dependence ([Heaviness of Smoking Index \|
+Data Share 2.0
 (nih.gov)](https://datashare.nida.nih.gov/instrument/heaviness-of-smoking-index).
-Based on the HSI scores, smokers will be categorized into low addiction
+Based on the HSI scores, smokers were categorized into low addiction
 (score 0-3), medium addiction (score 3-4), high addiction (5-6). For
-this analysis, in consultation with other literature, a cut of score of
-4 was deemed suitable and thus scores 0 to 3 are categorized as low
-addiction and scores 4 to 6 are categorized as high addiction[Heaviness
-of Smoking Index versus Fagerstrom Test for Nicotine Dependence among
-Current Smokers of Ahmedabad City,
+this analysis, in consultation with other literature, a cut off score of
+4 was deemed suitable to catagorize into low/high nicotine addiction.
+Thus scores 0 to 3 are categorized as low nicotine addiction and scores
+4 to 6 are categorized as high nicotine addiction [Heaviness of Smoking
+Index versus Fagerstrom Test for Nicotine Dependence among Current
+Smokers of Ahmedabad City,
 India](https://doi.org/10.22122%2Fahj.v13i1.291).
 
-## Measurements
-
-The outcome of interest is HSI: Heavy Smoking Index. Independent
-variables explored in this analysis include AGE: Current age of smokers,
-A01: Gender A04:Education level, A05: Employment status, A11: Marital
-Status, RESIDENCE: Residence of participants, B04: Age of smoking
-initiation, D01: Smoking quit attempt, D08: Smoking intent to quit
-
-## Data import and cleaning
-
-An SPSS data file was [downloaded from GTSS Info
-website](https://nccd.cdc.gov/GTSSDataSurveyResources/Ancillary/DataReports.aspx?CAID=2&Survey=4&WHORegion=3&Country=123&Site=27000)
-and imported into R. The code for importing and cleaning the dataset is
-documented in the R script file titled "processingcode.R". The raw
-dataset contained 4643 observations and 608 variables, of which 591
-variables were filtered out. Only 17 variables were considered for
-further examination.The variables of interest included
-socio-demographics, smoking status, smoking behaviors, cessation and
-media exposure. The 18th variable was computed by summing two variables
-(B01 + B07) to create the Heavy Smoking Index (HSI) Score, a proxy for
-examining nicotine dependence. The number of observations was further
-reduced by including only daily and less than daily smokers leaving a
-total of 631 observations. The dataset was examined for outliers,
-distribution, class appropriation. Recatagorization of response options
-was conducted when appropriate. After the removal of missing and outlier
-values, a total of 416 observations and 8 variables were saved for data
-exploration.
-
-![](images/paste-89A08E08.png){fig-align="center" width="343"}
-
----- exploredata --------
-
-## Statistical analysis
-
-*Explain anything related to your statistical analyses.*
+The outcome of interest therefor for this study is HSI: Heavy Smoking
+Index. While the Independent variables explored in this analysis include
+AGE: Current age of smokers, A01: Gender A04:Education level, A05:
+Employment status, A11: Marital Status, RESIDENCE: Residence of
+participants, B04: Age of smoking initiation, D01: Smoking quit attempt,
+D08: Smoking intent to quit.
 
 # Results
 
-## Exploratory/Descriptive analysis
+## Descriptive analysis
 
 In this sample of smokers, males with a median age of 35 years, those
 with secondary education and employed and belonging to the lowest wealth
 index had high nicotine addiction. There was also higher proportion of
 smokers who are single, live in rural for high addiction. Interms of
 behavior, more than half of those in the high addiction catagory made a
-quit attempt. similarly , the majoirty of smokers had no intent to quit
+quit attempt. However , the majority of smokers had no intention to quit
 within the next year . All codes related to data exploration are saved
 under code/analysis_code with a file name of exploratorycodeR.R. All
 tables and figures listed below are saved under results folder
 
 @Table1_Demographics Shows the demographics of the sample population
 
-```{r}
+```{r,echo=FALSE}
 result_table1 <- readRDS(here("results", "Table1_Demographics.rds"))
 result_table1
 ```
@@ -158,7 +181,7 @@ younger smokers.
 
 @figure1 shows a boxplot showing HSI Group mean by age
 
-```{r}
+```{r,echo=FALSE}
 #| label: figure1
 #| fig-cap: "HSI By Age."
 #| echo: FALSE
@@ -167,14 +190,13 @@ knitr::include_graphics(here("results","AgeVSHSI.png"))
 
 Interms of age of smoking initiation, those in the high addiction group
 have a mean age of smoking initiation slightly higher than those in the
-low addicition group. This again is contrary to the literature out there
-that suggests starting smoking early leads to high addiction in
-adulthood.
+low addiction group. This again is contrary to the literature that
+suggests starting smoking early leads to high addiction in adulthood.
 
 @figure2 shows a boxplot showing HSI Group mean age of smoking
 initiation
 
-```{r}
+```{r,echo=FALSE}
 #| label: figure2
 #| fig-cap: "HSI By Age of smoking Initiation."
 #| echo: FALSE
@@ -185,64 +207,85 @@ knitr::include_graphics(here("results","BO4vsHSI.png"))
 
 ## Full analysis
 
-A binary 5 fold cross validation logisitc regression was performed.
-Model 1 used all predictors, Model 2 used only thet age of initiation as
-the predictor and model three used cessation behaviors (quit attempt and
-quit intention) as predictors. The tables below represent the results
-for all three models
+A binary 5-fold cross validation logistic regression was performed.
+Model I used all predictors, Model II used only the age of initiation as
+the predictor and model III used cessation behaviors (quit attempt ) as
+predictors. The tables below represent the results for all three models
 
 @Model1 All predictors
 
-```{r}
-Model_Results1 <- readRDS(here("results", "model1.rds"))
-Model_Results1
+```{r,echo=FALSE}
+Model1 <- readRDS(here("results", "modelfit1.rds"))
+Model1
 ```
 
 @Model2 Age of initiation as predictor
 
-```{r}
+```{r,echo=FALSE}
 #| label: model2
-model2 <- readRDS(here("results", "model2.rds"))
+model2 <- readRDS(here("results", "modelfit2.rds"))
 model2
 ```
 
-@Model3 Quit attempt and quit intent as predictors
+@Model3 Quit attempt as predictors
 
-```{r}
-#| label: model1
-model3 <- readRDS(here("results", "model3.rds"))
+```{r,echo=FALSE}
+#| label: model3
+model3 <- readRDS(here("results", "modelfit3.rds"))
 model3
 ```
 
-### Model Evaluation
+### Model Evaluation and Performance using CV folds
 
-Model 1 ROC Curve with all predictors
+The three models were evaluated based on accuracy and roc_auc scores.
+Compared to model I and model III, model II performed better and thus
+selected for final test fit. The metrics for all three model evaluations
+considered are presented below.
 
-```{r echo=FALSE, out.width = "50%", fig.align = "center"}
-knitr::include_graphics(here("results","ROC_Mod1.png"))
+Model I Performance
+
+```{r,echo=FALSE}
+#| label: model1_performance
+readRDS(here("results", "model1performance.rds"))
+
 ```
 
-Model 2 ROC Curve with age of smoking initiation only as the predictor
+Model II Performance
 
-```{r echo=FALSE, out.width = "50%", fig.align = "center"}
+```{r,echo=FALSE}
+#| label: model2_performance
+ readRDS(here("results", "model2performance.rds"))
+
+```
+
+Model III performance
+
+```{r,echo=FALSE}
+#| label: model3_performance
+ readRDS(here("results", "model3performance.rds"))
+
+```
+
+### Final Model 
+
+```{r,echo=FALSE}
+#| label: figure3
+#| fig-cap: "Predictive Model"
+#| echo: FALSE
 knitr::include_graphics(here("results","ROC_Mod2.png"))
-```
-
-Model 3 ROC Curve with quit attempt and quit intent as predcitors
-
-```{r echo=FALSE, out.width = "50%", fig.align = "center"}
-knitr::include_graphics(here("results","ROC_Mod3.png"))
 ```
 
 # Discussion
 
 ## Summary and Interpretation
 
-All three models used in this anlaysis had an roc_auc estimate of less
-than .5. This means all three models do not do a good job of predicting
-addiction with any more accuracy than a guess with a 50/50 outcome. This
-also implies further literature review is required to narrow down some
-of the most notable predictors.
+All three models used in this anlaysis had an roc_auc estimate of .59 or
+less. This means these models do not do a good job of predicting
+addiction with any more accuracy than a guess with a 50/50 outcome
+except for model II. This also implies further literature review is
+required to narrow down some of the most notable predictors. Based on
+this analysis , age of smoking initiation is a statistically significant
+predictor of nicotine dependence.
 
 ## Strengths and Limitations
 
@@ -251,10 +294,14 @@ analysis.*
 
 ## Conclusions
 
-*What are the main take-home messages?*
-
-*Include citations in your Rmd file using bibtex, the list of references
-will automatically be placed at the end*
+Of all the predictors considered in this analysis, age of smoking
+initiation is the most significant predictor of nicotine dependence.
+*Implications:* Delayed onset of smoking initiation is associated with
+low nicotine dependence. Public health interventions should be aimed
+ensuring countries enforce policies that restrict smoking by age. In
+addition, almost half the smokers were high nicotine dependent, given
+the risk factors associated with smoking, strategies to improve access
+and utilization of cessations service is imperative.
 
 This paper [@leek2015] discusses types of analyses.
 
