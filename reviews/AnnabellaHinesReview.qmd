@@ -1,0 +1,170 @@
+---
+title: Project Review Template 
+author: Annabella Hines
+date: "`r file.mtime(knitr::current_input())`"
+format: 
+  html:
+    toc: true
+    toc-depth: 3
+    number-sections: true
+---
+
+# Overview
+
+Title of project: Prevalence and predictors of high nicotine dependence among adult smokers in Botswana,2017
+
+Name of project author(s): Betelihem Getachew
+
+Name of project reviewer: Annabella Hines
+
+
+
+# Specific project content evaluation
+
+
+## Background, Context and Motivation
+How well is the context of the project described? Is a comprehensive background, including summary of previous/related work given? Is the project well placed into the context of existing work (including proper referencing of existing work). Is it clear why the project was undertaken and what new information it hopes to provide?
+
+### Feedback and Comments
+
+The context and purpose of the project was described well and with appropriate references of existing work. The goals were clearly stated and made sense with the background info provided. 
+
+### Summary assessment (PICK ONE, DELETE THE OTHERS)
+
+* strong contextualization and motivation
+
+
+## Question description
+How well and clear are the question(s)/hypotheses the project aims to address described? Is it clear how the questions relate to the data?
+
+
+### Feedback and Comments
+
+The goals were very clear but I think they could be shifted into the form of a hypothesis or question rather than phrasing them as exploring and identifying predictors, which are more action statements. It is clear how they relate to the data and they make sense in the overall context.
+
+### Summary assessment
+
+* question/hypotheses fully clear
+
+
+## Data description
+How well is the data overall described? Is the source provided? Is a codebook or other meta-information available that makes it clear what the data is? 
+
+### Feedback and Comments
+
+The data was described very thoroughly, with the variables of interest and independent variables detailed in the measurement section. The website source was provided and the codebook for the original data set is as well. The details on the study that collected the original data was included in the main manuscript but I think some of it would be better suited for the supplementary material, like the section on participants.
+
+### Summary assessment
+
+* source and overall structure of data well explained
+
+## Data wrangling and exploratory analysis
+How well is the data cleaned/processed and explored? Are all steps reasonable and well explained? Are alternatives discussed and considered? Are meaningful exploratory results shown (e.g. in the supplementary materials)?
+
+### Feedback and Comments
+
+The data cleaning process was very extensive and well documented. The renaming and reassigning of the variables were all helpful in making the data easier to read and understand. The summary table was well formatted but I think it would help to change the variable names from the number letter combinations, like A04 to Education, just so it is more understandable in the manuscript. I think you could also include more exploration besides just age in the exploratory analysis section.
+
+### Summary assessment
+
+* some weaknesses in wrangling and exploratory component
+
+
+## Appropriateness of Analysis
+Were the analysis methods appropriate for the data? Was the analysis done properly? Were different components of the analysis (e.g. performance measure, variable selection, data pre-processing, model evaluation) done in the best way possible and explained well?
+
+### Feedback and Comments
+
+The statistical models presented in the manuscript are appropriate for the aims of the project. They narrow down the most associated variables that predict addiction. There were two statistical analysis files in the code folder, one that I couldn't run most of the code at all being the statistical_analysis.R, and the other with the relevant statistical code in the statistical_analysis_code.R file. It seems you may need to just delete the statistical_analysis.R file and change the README.md file to list the correct file to run. The three models presented were evaluated adequately and appropriate conclusions were drawn.
+
+### Summary assessment
+
+* strong and reasonable analysis
+
+## Presentation
+How well are results presented? Are tables and figures easy to read and understand? Are the main figures/tables publication level quality? 
+
+### Feedback and Comments
+
+As I mentioned above, your table 1 for demographics was formatted well but the categories could be renamed for accuracy. I also think adding titles and some aesthetic additions like colors to the box plots could be helpful for readers' clarity as well.  I like how the overall manuscript was formatted and thought the sectioning had a good flow.
+
+### Summary assessment
+
+* results are presented ok, with room for improvement
+
+
+## Discussion/Conclusions
+Are the study findings properly discussed? Are strengths and limitations acknowledged? Are findings interpreted properly?
+
+### Feedback and Comments
+
+The interpretation of results was in the manuscript but the conclusions section still had the initial template text. From the interpretation section, the discussion seemed relevant and correct but it just needs completed and expanded upon.
+
+### Summary assessment
+
+* major parts of discussion missing or wrong 
+
+
+## Further comments
+
+I think just finishing up the conclusions and really fleshing it out is the main thing you have left besides some general cleaning up. I liked the flow and your procedures were documented well.
+
+
+
+# Overall project content evaluation
+Evaluate overall features of the project  by filling in the sections below.
+
+
+## Structure
+Is the project well structured? Are files in well labeled folders? Do files have reasonable names? Are all "junk" files not needed for analysis/reproduction removed? By just looking at files and folders, can you get an idea of how things fit together?
+
+### Feedback and Comments
+
+I think overall it is well structured, besides the two different statistical analysis files, one seeming to be the original one from the template. The figures saved in the main file can be moved to the results folder to make the main directory cleaner. The readme.md files in the overall data folder, the raw data folder, and the products folder are also still from the initial template as well, so that can be altered to support the folder correctly. Also the supplementary file in the manuscript folder and the slides folder in the products folder has the same issues. Overall, you can go back through and delete some unnecessary materials.
+
+### Summary assessment
+
+* mostly clear, but some confusing parts (e.g. useless files, things in the wrong folders)
+
+
+## Documentation 
+How well is the project documented? Are you able to understand each step of the whole analysis, each decision that was made, and each line of code? Is enough information provided as comments in code or as part of Rmd files? 
+
+### Feedback and Comments
+
+I was able to understand what you were trying to accomplish with each line of code and it was well explained. I could see how the analysis flowed, but I think some more explanation could be used in the exploratory_analysis.R file.
+
+### Summary assessment
+
+* fully and well documented
+
+
+
+## Reproducibility
+Are all results fully reproducible? Is documentation provided which clearly explains how to reproduce things, and does it work without the need for any manual intervention? Are you able to re-run the whole analysis without having to do manual interventions/edits?
+
+### Feedback and Comments
+
+The pertinent files were all reproducible and the updated readme.md files explained what order to run the code in. It was mentioned that all the code can't be run at once and needs ran in chunks, but that didn't greatly inhibit my ability to reproduce it all.
+
+
+### Summary assessment
+ 
+* fully reproducible without issues
+
+
+## Thoroughness
+How thorough was the overall study? Were alternatives (e.g. different ways of processing the data or different models) considered? Were alternatives discussed? Were the questions/hypotheses fully and thoroughly addressed?
+
+### Feedback and Comments
+
+Alternatives were not really discussed for models or processing. Adding some more explanation of your thought process in choosing the particular models you ended up presenting may help with the thoroughness. However I feel like that you did present thoroughly addressed the aims you presented at the beginning of the manuscript.
+
+### Summary assessment
+
+* decent level of thoroughness
+
+
+## Further comments
+
+I think you could run through it in general for some spelling and grammar errors, but there weren't a ton and everything was still understandable. Also cleaning up the extraneous files will help with the clarity of the directory as well.
