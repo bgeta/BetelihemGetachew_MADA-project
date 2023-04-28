@@ -1,0 +1,180 @@
+---
+title: Betelihem Getachew Project Review  
+author: Seth Lattner
+date: "`r file.mtime(knitr::current_input())`"
+format: 
+  html:
+    toc: true
+    toc-depth: 3
+    number-sections: true
+---
+
+# Overview
+
+Title of project: **Prevalence and predictors of high nicotine dependence among adult smokers in Botswana, 2017**
+
+Name of project author(s): Betelihem Getachew
+
+Name of project reviewer: Seth Lattner
+
+# Instructions
+
+Write your comments and feedback below for each section/component of the project. The goal should be to help the author improve their project. Make comments as constructive and actionable as possible. You can provide both criticism and praise.
+
+For each component, pick one summary statement by deleting the ones that do not apply and keeping only the one that you think most closely summarizes a given component.
+
+Make sure your final document compiles/knits into a readable, well-formatted html document.
+
+Delete any sections/text of this template that are not part of your final review document. (Including these instructions.)
+
+# Specific project content evaluation
+
+Evaluate the different parts of the project by filling in the sections below.
+
+## Background, Context and Motivation
+
+How well is the context of the project described? Is a comprehensive background, including summary of previous/related work given? Is the project well placed into the context of existing work (including proper referencing of existing work). Is it clear why the project was undertaken and what new information it hopes to provide?
+
+### Feedback and Comments
+
+The context of the project is described fairly well. The knowledge gap being filled by this project is clearly addressed and the objectives are well defined. It is clear that this topic is understudied at a population level, especially in low-income countries. However, to better provide context for the project, a more thorough review of relevant literature would be very beneficial. This would provide a more comprehensive background that would be helpful in guiding the reader into the purpose of the project. I would suggest referencing at least a few relevant studies that highlight the importance of this work. Generally, expanding on the background section of the manuscript would help to contextualize the work that follows.
+
+### Summary assessment (PICK ONE, DELETE THE OTHERS)
+
+-   some contextualization and motivation
+
+## Question description
+
+How well and clear are the question(s)/hypotheses the project aims to address described? Is it clear how the questions relate to the data?
+
+### Feedback and Comments
+
+The questions addressed in this study are clearly defined and fit the data. The objectives are clearly summarized and are also relevant to the data. While the questions are addressed well, there are no clear hypotheses made based on the question. I suggest adding hypotheses based on the questions that are addressed in this project.
+
+### Summary assessment
+
+-   question/hypotheses somewhat explained
+
+## Data description
+
+How well is the data overall described? Is the source provided? Is a codebook or other meta-information available that makes it clear what the data is? 
+
+### Feedback and Comments
+
+The data are very clearly described in the manuscript and in the related files. The structure of the data is logical and supported. A codebook is provided that defines the predictors used in this project. Additionally, an official, comprehensive codebook from the original study is included in the raw data folder. The data source is clearly referenced when needed. Great work on describing and referencing the data. My only thought would be to perhaps make some of the variable names a little more explicit. I found myself having to reference the codebook frequently to recall what the variable name meant. For example, instead of A04 for education level, the name "edu_lvl" or something of the sort would more intuitive.
+
+### Summary assessment
+
+-   source and overall structure of data well explained
+
+## Data wrangling and exploratory analysis
+
+How well is the data cleaned/processed and explored? Are all steps reasonable and well explained? Are alternatives discussed and considered? Are meaningful exploratory results shown (e.g. in the supplementary materials)?
+
+### Feedback and Comments
+
+Each step of the data wrangling process is clearly documented and justified. It follows a logical flow and was processed efficiently. The exploratory analysis is brief but sufficient. All steps are explained along the way. I also appreciated that you tied exploration into your processing code, too. This helped to support your decisions about data processing. Unfortunately, none of the meaningful exploration is included in the supplementary materials. Great work with the data cleaning/exploration! One thing I noticed was that, in a few cases the age at which a respondent claimed they began smoking was older than their current age...I'm not sure the best way to filter out these respondents or that variable, but may be something to look into. I would suggest adding some of your exploratory results to the supplementary materials.
+
+### Summary assessment
+
+-   essentially no weaknesses in wrangling and exploratory component
+
+## Appropriateness of Analysis
+
+Were the analysis methods appropriate for the data? Was the analysis done properly? Were different components of the analysis (e.g. performance measure, variable selection, data pre-processing, model evaluation) done in the best way possible and explained well?
+
+### Feedback and Comments
+
+To the best of my understanding, this was an appropriate analysis method. The response variable (Heavy Smoking Index) and the predictors seemed to be relevant to the question. This supported the decision to run logistic regression models using a cross-validation approach. Using accuracy and ROC for the performance measures was logical. All decisions were explained well and seemed reasonable. 
+
+### Summary assessment
+
+-   strong and reasonable analysis
+
+## Presentation
+
+How well are results presented? Are tables and figures easy to read and understand? Are the main figures/tables publication level quality?
+
+### Feedback and Comments
+
+The results were very well presented. Important summary stats are highlighted in the written results and the analysis results are clearly described. The tables and figures are useful and easy to understand. Slight improvements could be made to increase the quality of their appearance, but these are only minor changes. Additionally, a bit more explicit table/figure captions would be beneficial.
+
+### Summary assessment
+
+-   results are very well presented
+
+## Discussion/Conclusions
+
+Are the study findings properly discussed? Are strengths and limitations acknowledged? Are findings interpreted properly?
+
+### Feedback and Comments
+
+Discussion and conclusions are brief, however, they do a fairly good job of explaining the results and suitable interpretations are drawn. As it was concluded that none of the models performed well, a bit more thorough discussion of what changes could be made to address this or possible sources of the problem would be helpful. Even without strong models, a more in-depth discussion of the results that you did find would be helpful. For example, perhaps other studies also found that similar predictors did or did not have a correlation with heavy smoking use. Addressing some relevant literature could either support your findings or suggest that there could be improvements made to the analysis. The implications that are addressed are logical and properly interpreted. Limitations are not discussed and would be good to add in the final draft. 
+
+### Summary assessment
+
+-   minor parts wrong, missing or unclear
+
+## Further comments
+
+*Add any other comments regarding the different aspects of the project here. Write anything you think can help your classmate improve their project.*
+
+Great work!
+
+# Overall project content evaluation
+
+Evaluate overall features of the project by filling in the sections below.
+
+## Structure
+
+Is the project well structured? Are files in well labeled folders? Do files have reasonable names? Are all "junk" files not needed for analysis/reproduction removed? By just looking at files and folders, can you get an idea of how things fit together?
+
+### Feedback and Comments
+
+Overall, fairly well organized. There could be improvement though as it seems that some of the processing and analysis files are unused in the final product. Additionally, the main statistical analysis R file is not in the code 'analysis_code' folder. Some of the README.md files that are unused can be deleted, as well as other R and QMD files. Putting the images in a folder might also clear up the project repository.
+
+### Summary assessment
+
+-   mostly clear, but some confusing parts (e.g. useless files, things in the wrong folders)
+
+## Documentation
+
+How well is the project documented? Are you able to understand each step of the whole analysis, each decision that was made, and each line of code? Is enough information provided as comments in code or as part of Rmd files?
+
+### Feedback and Comments
+
+Well documented at all stages of the analysis. The README.md files were a great guide to reproducing the analysis. The comments throughout the files clearly described what was being executed by the code and offered justification as to why each step was taken. Excellent work at documenting the project. I was very easily able to follow the steps for reproducing this work. All steps of the analysis were well described and supported with comments and description.
+
+### Summary assessment
+
+-   fully and well documented
+
+## Reproducibility
+
+Are all results fully reproducible? Is documentation provided which clearly explains how to reproduce things, and does it work without the need for any manual intervention? Are you able to re-run the whole analysis without having to do manual interventions/edits?
+
+### Feedback and Comments
+
+Almost all of the work was easily reproducible. The only issue I ran into was in the Modelevaluation.Rmd file. Towards the end, the object 'fit_HMI2' is not recognized. This causes a few issues with some subsequent code as well. Otherwise, very reproducible and really great job at this part!
+
+### Summary assessment
+
+-   small parts not reproducible or required manual intervention
+
+## Thoroughness
+
+How thorough was the overall study? Were alternatives (e.g. different ways of processing the data or different models) considered? Were alternatives discussed? Were the questions/hypotheses fully and thoroughly addressed?
+
+### Feedback and Comments
+
+This project was thorough in addressing the research questions. Clear documentation was used throughout the project and several models were used and compared to fit the data. The only area I could see improvement in this area would be in addressing some of the limitations and a bit more discussion in the manuscript.
+
+### Summary assessment
+
+-   strong level of thoroughness
+
+## Further comments
+
+*Add any other comments regarding the overall project here. Write anything you think can help your classmate improve their project.*
+
+I would suggest adding a bit to the supplementary materials in the manuscript folder. This will allow you to include some of the things that didn't make it into the final analysis/manuscript. 
