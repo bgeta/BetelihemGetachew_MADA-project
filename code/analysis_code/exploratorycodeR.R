@@ -17,7 +17,7 @@ library(dplyr) #for data processing/cleaning
 library(tidyr) #for data processing/cleaning
 library(skimr) #for nice visualization of data 
 library(here)  #to set paths       
-library(gmodels)#to look at the tables 
+library(gmodels)#to look at the tables  
 library(ggplot2) #to plot histograms and charts
 library(janitor) # to create crosstabs
 library(vtree)  # to create crosstabs
@@ -121,6 +121,18 @@ figure2 <- ggplot(processeddata,aes(HSI,B04))+geom_boxplot()
 plot(figure2)+title("HSI and Age of smoking Initiation")
 figure_file <- here::here("results","figure2.png")
 ggsave(filename = figure_file, plot=figure2)
+
+figure3 <- ggplot(processeddata, aes(AGE)) +
+  geom_histogram(aes(fill=HSI), color = "black", binwidth = 2)
+plot(figure3)+title("Distribution of AGe by HSI")
+figure_file <- here::here("results","figure3.png")
+ggsave(filename = figure_file, plot=figure3)
+
+figure4 <- ggplot(processeddata,aes(B04)) +
+  geom_histogram(aes(fill=HSI), color = "black", binwidth = 2)
+plot(figure4)+title("Distribution of Age of smoking Initiation by HSI")
+figure_file <- here::here("results","figure4.png")
+ggsave(filename = figure_file, plot=figure4)
 
 #the below three figures saved using the plots tab on the menu. I attempted to write a code but it didnt work
 

@@ -19,6 +19,8 @@ Then Run the exploratory code. you can find it under code/analysis_code/explorat
 Lastly Run teh statistical analysis code. you can find it under code/analysis_code/statistical_anlaysis.R
 PLEASE AVOID RUNNING ALL CODES AT ONCE. INSTEAD RUN BY CHUNK TO AVOID ANY ERRORS. WHEN TRYING TO RUN ALL CODES AT ONCE IT LOOKS LIKE IT DOESNT RUN AS SMOOTHLY. 
 
+Statistical Analysis 
+A 5 fold binary logistic Regression is performed
 
 Dataset
 you can find the raw dataset under data/raw_data/Botswana.sav
@@ -27,9 +29,11 @@ you can find the processed/cleaned data set under data/processed_data/processedd
 Codebook for survey 
 you can find it under data/raw_data/Botswana.pdf
 
-Statistical Analysis 
-A binary, 5 fold Logistic Regression performed on all, one and three variable at a time. 
 
+Manuscript
+Manuscript is located under products> Manuscript. The quarto and document file can be located here. 
 
+Supplement 
+The supplement quarto file can be located in Manuscript/Supplement
 
 

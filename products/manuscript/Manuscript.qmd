@@ -36,19 +36,19 @@ smoking prevalence country is important in designing an efficient
 cessation service. *Methods:* This study is a secondary data analysis
 utilizing data collected by Global Adult Tobacco Survey among adults.
 This study examined the 1)Prevalence of nicotine dependence and 2)
-Predictors of nicotine dependence. Results: In this sample of smokers,
+Predictors of nicotine dependence. *Results*: In this sample of smokers,
 46% were categorized with high addiction. Those who are men, completed
 secondary education, are employed, and in the lowest wealth index
 residing in rural areas and single marital status tend to have high
-nicotine addiction. *Conclusions:* Of all the predictors considered in
-this analysis, age of smoking initiation is the most significant
-predictor of nicotine dependence. *Implications:* Delayed onset of
-smoking initiation is associated with low nicotine dependence. Public
-health interventions should be aimed ensuring countries enforce policies
-that restrict smoking by age. In addition, almost half the smokers were
-high nicotine dependent, given the risk factors associated with smoking,
-strategies to improve access and utilization of cessations service is
-imperative.
+nicotine addiction. We found a significant negative association between
+age of smoking initiation and nicotine dependence (Coefficient = -.039,
+P=.012). All other predictors were not significant in all three models
+explored. *Conclusions:* Of all the predictors considered in this
+analysis, age of smoking initiation is the most significant predictor of
+nicotine dependence. The results imply those who started smoking late
+are most likely to be classified as having high addiction. This is not
+inline with previous findings that suggest delayed onset of smoking
+initiation is protective again nicotine addition.
 
 # Introduction
 
@@ -60,7 +60,11 @@ countries. However, while the smoking prevalence might be low, not much
 has been said about smokers nicotine dependence in the region.
 Understanding nicotine dependence among smokers provides an opportunity
 for a targeted intervention strategies that are more efficient and
-effective.
+effective. Some studies have shown quit intentions association with
+nicotine dependence [@Lin_2021][@Ni_2018],[@Le_Grande_2020] while other
+studies have shown significant association between nicotine dependence
+and certain demographic factors such as being male, single and aged
+45-65[@Schnoll_2013]
 
 Under the Global Tobacco Surveillance system Data (GTSSData) at CDC, the
 Global Adult Tobacco Survey (GATS) is the global standard to
@@ -117,7 +121,7 @@ of this study, examining nicotine addiction prevalence, non-smokers
 observations of daily and non daily smokers were retained for anlaysis.
 During data cleaning, 215 observations were deemed unusable data due to
 missing or incorrect entries and thus further removed leaving a final
-study sample of 416 observations.
+study sample of 416 observations. [@Lin_2021]
 
 ![](images/paste-79A3A439.png){width="384"}
 
@@ -163,7 +167,9 @@ index had high nicotine addiction. There was also higher proportion of
 smokers who are single, live in rural for high addiction. Interms of
 behavior, more than half of those in the high addiction catagory made a
 quit attempt. However , the majority of smokers had no intention to quit
-within the next year . All codes related to data exploration are saved
+within the next year . Interms of Nicotine addiction, almost half of the
+sample (n=192,46%) had high nicotine dependence as measured by heavy
+smoking index (HSI).All codes related to data exploration are saved
 under code/analysis_code with a file name of exploratorycodeR.R. All
 tables and figures listed below are saved under results folder
 
@@ -210,9 +216,11 @@ knitr::include_graphics(here("results","BO4vsHSI.png"))
 A binary 5-fold cross validation logistic regression was performed.
 Model I used all predictors, Model II used only the age of initiation as
 the predictor and model III used cessation behaviors (quit attempt ) as
-predictors. The tables below represent the results for all three models
-
-@Model1 All predictors
+predictors. The tables below represent the results for all three models.
+The variable B04 (age of smoking initiation) was the most common
+predictor that was significant in Model I and Model III. Quit attempt,
+the only predictor used in Model III was also not significant with P
+value of significance more than .05. @Model1 All predictors
 
 ```{r,echo=FALSE}
 Model1 <- readRDS(here("results", "modelfit1.rds"))
@@ -234,6 +242,10 @@ model2
 model3 <- readRDS(here("results", "modelfit3.rds"))
 model3
 ```
+
+We found a significant negative association between age of smoking
+initiation and nicotine dependence (Coefficient = -.039, P=.012). All
+other predictors were not significant in all three models explored.
 
 ### Model Evaluation and Performance using CV folds
 
@@ -266,7 +278,7 @@ Model III performance
 
 ```
 
-### Final Model 
+### Final Model
 
 ```{r,echo=FALSE}
 #| label: figure3
@@ -279,43 +291,47 @@ knitr::include_graphics(here("results","ROC_Mod2.png"))
 
 ## Summary and Interpretation
 
-All three models used in this anlaysis had an roc_auc estimate of .59 or
-less. This means these models do not do a good job of predicting
-addiction with any more accuracy than a guess with a 50/50 outcome
-except for model II. This also implies further literature review is
-required to narrow down some of the most notable predictors. Based on
-this analysis , age of smoking initiation is a statistically significant
-predictor of nicotine dependence.
+All three models used in this analysis had an roc_auc estimate of .59 or
+less. Especially, the first and third models do not do a good job of
+predicting addiction with any more accuracy than a guess with a 50/50
+outcome. The second model, albeit low performance, performed better than
+models 1 or 3. However, we did find a significant negative association
+between age of smoking initiation and nicotine dependence (Coefficient =
+-.039, P=.012). Anecdotally, if someone starts smoking early in their
+life, they are more likely to have smoked for a long time by the time
+they are adults, which means a higher probability of high nicotine
+dependence. Perhaps there maybe other coavariates and interactions that
+might explain this unexpected results. Nevethelesss. Based on this
+analysis , age of smoking initiation is a statistically significantly
+positively associated with nicotine dependence.
 
 ## Strengths and Limitations
 
-*Discuss what you perceive as strengths and limitations of your
-analysis.*
+The extensive model evaluation including the 5-fold re-sampling
+procedurs are some of the strengths of this analysis. One of the major
+limitations of this analysis is the treatment of HSI which was a
+continuous variable (1-6) into a two category variables. Most of the
+literature does categorize HSI into three level variables (Low, medium,
+High) while few studies categorized into low and high. The effect of
+these changes are unknown and might contribute to the our models being
+less accurate. I think this analysis would benefit from a sensitivity
+test, by comparing results of the categorized HSI vs HSI as a continuous
+variable (in its original form). Another limitation is, this analysis
+did not measure interactions with HSI and predicitors which could
+explain the unexpected results. We did not analyze if any of the
+demographics or socioeconomic status played a role in the smokers
+likelyhood having low or high addiction to nicotine.
 
 ## Conclusions
 
 Of all the predictors considered in this analysis, age of smoking
-initiation is the most significant predictor of nicotine dependence.
-*Implications:* Delayed onset of smoking initiation is associated with
-low nicotine dependence. Public health interventions should be aimed
-ensuring countries enforce policies that restrict smoking by age. In
+initiation is the most significant predictor of nicotine dependence. In
 addition, almost half the smokers were high nicotine dependent, given
 the risk factors associated with smoking, strategies to improve access
-and utilization of cessations service is imperative.
-
-This paper [@leek2015] discusses types of analyses.
-
-These papers [@mckay2020; @mckay2020a] are good examples of papers
-published using a fully reproducible setup similar to the one shown in
-this template.
-
-Note that this cited reference will show up at the end of the document,
-the reference formatting is determined by the CSL file specified in the
-YAML header. Many more style files for almost any journal [are
-available](https://www.zotero.org/styles). You also specify the location
-of your bibtex reference file in the YAML. You can call your reference
-file anything you like, I just used the generic word `references.bib`
-but giving it a more descriptive name is probably better.
+and utilization of cessations service is imperative. In addition to
+demographic and cessation behaviors, other environmental, cognitive and
+other theory based behavior constructs need to be explored to under
+their influence on nicotine dependence.
 
 {{< pagebreak >}}
 

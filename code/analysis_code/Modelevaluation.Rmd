@@ -8,6 +8,7 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE, fig.width = 8, fig.height = 5)
 library(tidyverse)
 library(tidymodels)
+library(pROC)
 
 ```
 
@@ -99,6 +100,7 @@ fold_fit
 
 ```{r}
 model1performance <-collect_metrics(fold_fit)
+model1performance
 ```
 
 
@@ -168,11 +170,6 @@ model2performance
 
 The one predictor model seems to perform better with an accuracy of .56 and roc of .59
 
-```{r}
-save_summary_location <- here::here("results","model2.rds")
-saveRDS(model2, file = save_summary_location)
-```
-
 ## ***Model III using D01 and D08 (quit attempt, quit interest as the main predictors)***
 
 **Setup recipe**
@@ -238,19 +235,19 @@ model3performance<-collect_metrics(fold_fit3)
 model3performance
 ```
 
-This model seems to perform as goog as model 1 but worse than model 2. We therefor choose model 2 to predict 
+This model seems to perform as good as model 1 but worse than model 2. We therefor choose model 2 to predict 
 
-Now lets use the trained workflow to predict test data set
+Now lets use the trained workflow fit 2 to predict test data set
 
 ```{r}
-predict(fit_HSI2,HSI_test,type = "prob")
+pred_prob <- predict(fit2,HSI_test,type = "prob")
 ```
 
 Now lets look at the model and test data together using augment function
 
 ```{r}
 HSI_aug2 <-
-  augment(fit_HSI2,HSI_test,type="prob")
+  augment(fit2,HSI_test,type="prob")
 HSI_aug2
 ```
 
@@ -263,6 +260,9 @@ roc_curve(truth=HSI,.pred_LowAddiction) %>%
   autoplot()
 ROC_Mod2
 ```
+Getting the value of the Area under the curve would have been helpful but my calculations did not produce a value. But the curve here tells us the area under the curve is far away from 1. 
+
+
 **Final Fit**
 **Setup recipe**
 

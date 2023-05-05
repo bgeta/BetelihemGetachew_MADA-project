@@ -1,7 +1,7 @@
 ###############################
 # processing script
 #
-#this script loads the raw data, processes and cleans it 
+#This script loads the raw data, processes and cleans it 
 #and saves it as Rds file in the processed_data folder
 #
 # Note the ## ---- name ---- notation
@@ -107,7 +107,7 @@ ggplot(df_rawdata3)+
 #Look at each variable individually by using the summary function to detect any odd values
 summary(df_rawdata3$AGE)
 summary(df_rawdata3$B04)
-#it looks like there is a value of 99 for refused  that need to be removed 
+#it looks like there is a value of 99 for refused  those observations need to be removed 
 df_rawdata4<-subset(df_rawdata3, A04!=99)
 df_rawdata4<-subset(df_rawdata3, B04!=99)
 df_rawdata4<-subset(df_rawdata3, AGE!=99)
@@ -142,7 +142,7 @@ View(df_rawdata7)
 dim(df_rawdata7)
 names(df_rawdata7)
 str(df_rawdata7)
-#With the removal of missing values, the datset now has 418 observations and 14 variables 
+#With the removal of missing values, the data set now has 418 observations and 14 variables 
 
 ## ---- cleandata4 --------
 # Inspecting the data, we find some problems that need addressing:
@@ -300,7 +300,7 @@ ddply(df_rawdata9, .(HSI), summarise, mean(B04))
 
 View(df_rawdata9)
 
-
+ 
 ## ---- cleandata5 --------
 
 

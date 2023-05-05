@@ -1,8 +1,8 @@
 ---
-title: "Supplement to Example Manuscript Template for a Data Analysis Project"
+title: "Supplement to Prevalence and Predictors of high nicotine dependnece among adult smokers in Botswana, 2017"
 
 subtitle: ""
-author: Andreas Handel
+author: Betelihem Getachew      
 date: "`r Sys.Date()`"
 format:
   pdf:
@@ -13,89 +13,93 @@ bibliography: ../../dataanalysis_template_references.bib
 csl: ../../vancouver.csl
 ---
 
-
 ```{r, echo=FALSE, message=FALSE}
 # load a few R packages
 library(here)
 library(knitr)
+library(tinytex)
 ```
-
-
-
-
-This shows some materials that could go into a supplementary file. Often you want/need references here too. You can use the same reference bib file for this and the main text (as done here) or have separate bib files.
-
-For illustrative purposes, I'm doing the supplement as pdf. For this to work, you need a (La)TeX system installed. It's easy. Just follow [these steps](https://quarto.org/docs/output-formats/pdf-basics.html).
-
-Of course you would choose the format based on needs.
-
-I'm also using a different style for the references here. (vancouver vs apa in the main manuscript). Usually one would have the formatting of the references the same in those two documents, but I want to illustrate how easy it is to switch reference formatting styles, you just need to get the right CSL file and specify it in the YAML header. We could also have a seperate reference bibtext (`.bib`) file, but here we are using the same.
 
 # Overview
 
-A quick overview of what readers can find in the supplement.
-
-
-# Code and file information
-
-Explain here what each code/file is and does, and in which order (if any) users need to run thing to reproduce everything.
-Essentially, give a full set of instructions to re-generate everything.
-
-
-{{< pagebreak >}}
-
-
-# Additional Method Details
-
-Often, the main manuscript only allows for an overview description of the methods. Use the supplement to describe all your methods, models and approaches in a lot of detail. Reference specific parts of your code as needed.
-
-{{< pagebreak >}}
-
+In this supplement file you will find additional tables and figures used in decision making throughout the analysis process. This includes during data wrangling/cleaning or fitting.
 
 # Additional results
 
 Show additional results here. Those can be some useful exploratory/descriptive figures or tables, or results from additional analyses that didn't make it into the main text.
 
-
-## Example additional result
-
-
-@tbl-resulttable1 shows an additional table summarizing a model fit.
+@table1 shows an additional table summarizing HSI by Gender.
 
 ```{r}
-#| label: tbl-resulttable1
-#| tbl-cap: "Another fit table."
+#| label: tbl-table1
+#| tbl-cap: "Addicition by Gender"
 #| echo: FALSE
-resulttable1 = readRDS(here("results","resulttable1.rds"))
-knitr::kable(resulttable1)
+resulttable1 = readRDS(here("results","table1.rds"))
+
 ```
 
-
-
-@fig-result2 shows a scatterplot figure produced by one of the R scripts.
-
+@table2 shows an additional table summarizing HSI by Education level.
 
 ```{r}
-#| label: fig-result2
-#| fig-cap: "Height and weight."
+#| label: tbl-table2
+#| tbl-cap: "Addicition by Education Level"
 #| echo: FALSE
-knitr::include_graphics(here("results","height_weight.png"))
+resulttable1 = readRDS(here("results","table2.rds"))
+
 ```
 
+@table3 shows an additional table summarizing HSI by Wealth Index
+
+```{r}
+#| label: tbl-table3
+#| tbl-cap: "Addicition by Wealth Index"
+#| echo: FALSE
+resulttable1 = readRDS(here("results","table3.rds"))
+
+```
+
+@table4 shows an additional table summarizing HSI by Residence.
+
+```{r}
+#| label: tbl-table4
+#| tbl-cap: "Addicition by Residence"
+#| echo: FALSE
+resulttable1 = readRDS(here("results","table4.rds"))
+
+```
+
+@table5 shows an additional table summarizing HSI by Thoughts of Quitting Cigarette smoking.
+
+```{r}
+#| label: tbl-table5
+#| tbl-cap: "HSI by Thoughts of Quitting Cigaratte Smoking"
+#| echo: FALSE
+resulttable1 = readRDS(here("results","table5.rds"))
+
+```
+
+@figure3 Distribution of current age by HSI.
+
+```{r}
+#| label: fig-figure3
+#| fig-cap: "Distribution of Current age by HSI."
+#| echo: FALSE
+knitr::include_graphics(here("results","figure3.png"))
+```
+
+@figure4 Distribution of age of smoking Initiation by HSI.
+
+```{r}
+#| label: fig-figure4
+#| fig-cap: "Distribution of age of smooking initiation by HSI."
+#| echo: FALSE
+knitr::include_graphics(here("results","figure4.png"))
+```
 
 {{< pagebreak >}}
-
 
 # Discussion
 
-Any additional discussion regarding the supplementary material/findings.
-
-These papers [@mckay2020; @mckay2020a] are good examples of papers published using a fully reproducible setup similar to the one shown in this template. 
-
 {{< pagebreak >}}
 
-
 # References
-
-
-
